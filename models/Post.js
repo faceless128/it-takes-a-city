@@ -1,13 +1,19 @@
-// TO DO: 
+// REQUIREMENTS START //
 
-// REQUIREMENTS //
+// Require Model and DataType
+const { Model, DataTypes } = require("sequelize");
 
-// Model and DataType
+// Require Sequelize
+const sequelize = require("../config/connection");
 
-// Sequelize 
+// REQUIREMENTS END // 
 
 // Create Model
+class Post extends Model {}
 
-// Create fields/columns here 
-
+// Create fields/columns here
+Post.init({
+  // Columns will go here!
+});
 // Export Model
+module.exports = Post;

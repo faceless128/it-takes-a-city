@@ -1,13 +1,22 @@
-// TO DO: 
+// REQUIREMENTS START //
 
-// REQUIREMENTS //
+// Require Model and DataType
+const { Model, DataTypes } = require("sequelize");
 
-// Model and DataType
+// Set up bcrypt
+const bcrypt = require("bcrypt");
+// Require Sequelize
+const sequelize = require("../config/connection");
 
-// Sequelize 
+// REQUIREMENTS END //
 
 // Create Model
-
-// Create fields/columns here 
-
+class User extends Model {
+  // Set up method to run on instance data
+}
+// Create fields/columns here
+User.init({
+  // Columns will go here!
+});
 // Export Model
+module.exports = User;
