@@ -1,0 +1,1 @@
+// Was thinking we could use this folder for a favicon file 
