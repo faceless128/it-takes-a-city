@@ -29,6 +29,8 @@ const sequelize = require("./config/connection");
 // Require Connect Session Sequelize
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
+// REQUIREMENTS END //
+
 // Set up Session
 const sess = {
   // Set up Secret Name
