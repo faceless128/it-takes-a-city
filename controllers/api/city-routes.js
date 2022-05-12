@@ -4,7 +4,7 @@ const {
   Post,
   Comment,
   City,
-  Foodbank,
+  Location,
 } = require("../../models");
 const sequelize = require("../../config/connection");
 const withAuth = require("../../utils/auth");
