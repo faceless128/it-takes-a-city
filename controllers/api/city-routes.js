@@ -6,11 +6,13 @@ const {
   City,
   Foodbank,
 } = require("../../models");
+const sequelize = require("../../config/connection");
+const withAuth = require("../../utils/auth");
 
 // this route will GET all cities
 router.get("/", (req, res) => {
   City.findAll()
-    .then(dbUserData => res.json(dbUserData))
+    .then(dbCityData => res.json(dbCityData))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -28,16 +30,30 @@ router.get("/:id", (req, res) => {
       attributes: ["id", "foodbank_name", "address"]
     }]
   })
-  .then(dbUserData => {
-    if (!dbUserData) {
+  .then(dbCityData => {
+    if (!dbCityData) {
       res.status(404).json({
         message: "No city found with this id."
       });
       return;
     }
-    res.json(dbUserData);
+    res.json(dbCityData);
   })
   .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
+// this route will POST/create a city
+// users will be required to be logged in to use this feature
+router.post("/", withAuth, (req, res) => {
+  Post.create({
+    name: req.body.name,
+    stateName: req.body.stateName
+  })
+  .then((dbCityData) => res.json(dbCityData))
+  .catch((err) => {
     console.log(err);
     res.status(500).json(err);
   });
