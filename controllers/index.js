@@ -1,14 +1,14 @@
-// REQUIREMENTS //
+const router = require("express").Router();
+const apiRoutes = require("./api");
+const homeRoutes = require("./home-routes.js");
+const dashboardRoutes = require("./dashboard-routes.js");
 
-// Router
-// apiRoutes
-// homeRoutes
-// dashboardRoutes
+router.use("/api", apiRoutes);
+router.use("/dashboard", dashboardRoutes);
+router.use("/", homeRoutes);
 
-// ROUTER USE //
+router.use((req, res) => {
+  res.status(404).end();
+});
 
-// apiRoutes -  "/"
-// apiRoutes - "/api"
-// dashboardRoutes - "/dashboard"
-
-// EXPORT ROUTER //
+module.exports = router;
