@@ -6,39 +6,40 @@ const User = require("./User");
 const Comment = require("./Comment");
 // Require City
 const City = require("./City");
+
 // Require foodbank
-const Foodbank = require("./Foodbank");
+const Location = require("./Location");
 
 User.hasMany(Post, {
-    foreignKey: 'user_id'
-})
+  foreignKey: "user_id",
+});
 
 User.hasMany(Comment, {
-    foreignKey: 'user_id'
-})
+  foreignKey: "user_id",
+});
 
 Post.belongsTo(User, {
-    foreignKey: 'user_id'
-})
+  foreignKey: "user_id",
+});
 
 Post.hasMany(Comment, {
-    foreignKey: 'post_id'
-})
+  foreignKey: "post_id",
+});
 
 Comment.belongsTo(User, {
-    foreignKey: 'user_id'
-})
+  foreignKey: "user_id",
+});
 
 Comment.belongsTo(Post, {
-    foreignKey: 'post_id'
-})
+  foreignKey: "post_id",
+});
 
-City.hasMany(Foodbank, {
-  foreignKey: "foodbank_id"
-})
+City.hasMany(Location, {
+  foreignKey: "location_id",
+});
 
-Foodbank.belongsTo(City, {
-  foreignKey: "city_id"
-})
+Location.belongsTo(City, {
+  foreignKey: "city_id",
+});
 
-module.exports = { User, Post, Comment, City, Foodbank };
+module.exports = { User, Post, Comment, City, Location };
