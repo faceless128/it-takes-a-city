@@ -5,6 +5,11 @@ const Post = require("./Post");
 const User = require("./User");
 // Require Comment
 const Comment = require("./Comment");
+// Require City
+const City = require("./City");
+// Require foodbank
+const Foodbank = require("./Foodbank");
+
 // Set up Associations
 
 // Post.belongsTo(User, {})
@@ -13,5 +18,14 @@ const Comment = require("./Comment");
 
 // Comment.belongTo(User, {})
 
+City.hasMany(Foodbank, {
+  foreignKey: "foodbank_id"
+})
+
+Foodbank.belongsTo(City, {
+  foreignKey: "city_id"
+})
+
+
 // EXPORT MODELS //
-module.exports = { User, Post, Comment };
+module.exports = { User, Post, Comment, City, Foodbank };
