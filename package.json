@@ -1,7 +1,7 @@
 {
   "name": "project-2",
   "version": "1.0.0",
-  "description": "**Project Title:**",
+  "description": "It Takes A City",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cwarmbrunn/developer-tech-blog.git"
+    "url": "git+https://github.com/cwarmbrunn/it-takes-a-city.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cwarmbrunn/developer-tech-blog/issues"
+    "url": "https://github.com/cwarmbrunn/it-takes-a-city/issues"
   },
-  "homepage": "https://github.com/cwarmbrunn/developer-tech-blog#readme",
+  "homepage": "https://github.com/cwarmbrunn/it-takes-a-city#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.3",
