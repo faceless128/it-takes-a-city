@@ -1,4 +1,3 @@
-// TO DO: Import ALL Models
 // Require Post
 const Post = require("./Post");
 // Require User
@@ -10,13 +9,29 @@ const City = require("./City");
 // Require foodbank
 const Foodbank = require("./Foodbank");
 
-// Set up Associations
+User.hasMany(Post, {
+    foreignKey: 'user_id'
+})
 
-// Post.belongsTo(User, {})
+User.hasMany(Comment, {
+    foreignKey: 'user_id'
+})
 
-// Post.hasMany(Comment, {})
+Post.belongsTo(User, {
+    foreignKey: 'user_id'
+})
 
-// Comment.belongTo(User, {})
+Post.hasMany(Comment, {
+    foreignKey: 'post_id'
+})
+
+Comment.belongsTo(User, {
+    foreignKey: 'user_id'
+})
+
+Comment.belongsTo(Post, {
+    foreignKey: 'post_id'
+})
 
 City.hasMany(Foodbank, {
   foreignKey: "foodbank_id"
@@ -26,6 +41,4 @@ Foodbank.belongsTo(City, {
   foreignKey: "city_id"
 })
 
-
-// EXPORT MODELS //
 module.exports = { User, Post, Comment, City, Foodbank };
