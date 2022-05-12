@@ -50,13 +50,40 @@ router.get("/:id", (req, res) => {
 // users will be required to be logged in to use this feature
 router.post("/", withAuth, (req, res) => {
   Foodbank.create({
-    foodbank_name: req.body.name,
-    address: req.body.address,
-    city_id: req.body.city_id
-  })
-  .then((dbFoodbankData) => res.json(dbFoodbankData))
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json(err);
-  });
+      foodbank_name: req.body.foodbank_name,
+      address: req.body.address,
+      city_id: req.body.city_id
+    })
+    .then((dbFoodbankData) => res.json(dbFoodbankData))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+// this route will PUT/update a foodbank by id
+// users will be required to be logged in to use this feature
+router.put("/:id", withAuth, (req, res) => {
+  Foodbank.update({
+      foodbank_name: req.body.foodbank_name,
+      address: req.body.address,
+      city_id: req.body.city_id
+    }, {
+      where: {
+        id: req.params.id,
+      },
+    })
+    .then((dbFoodbankData) => {
+      if (!dbFoodbankData) {
+        res.status(404).json({
+          message: "No foodbank found with this id."
+        });
+        return;
+      }
+      res.json(dbFoodbankData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
