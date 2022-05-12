@@ -48,11 +48,37 @@ router.get("/:id", (req, res) => {
 // this route will POST/create a city
 // users will be required to be logged in to use this feature
 router.post("/", withAuth, (req, res) => {
-  Post.create({
+  City.create({
     name: req.body.name,
     stateName: req.body.stateName
   })
   .then((dbCityData) => res.json(dbCityData))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
+// this route will PUT/update a city. Option in case user entered new city incorrectly
+// users will be required to be logged in to use this feature
+router.put("/:id", withAuth, (req, res) => {
+  City.update({
+    name: req.body.name,
+    stateName: req.body.stateName
+  }, {
+    where: {
+      id: req.params.id,
+    },
+  })
+  .then((dbCityData) => {
+    if (!dbCityData) {
+      res.status(404).json({
+        message: "No city found with this id."
+      });
+      return;
+    }
+    res.json(dbCityData);
+  })
   .catch((err) => {
     console.log(err);
     res.status(500).json(err);
