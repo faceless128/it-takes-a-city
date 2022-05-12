@@ -45,3 +45,18 @@ router.get("/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
+
+// this route will POST/add a foodbank
+// users will be required to be logged in to use this feature
+router.post("/", withAuth, (req, res) => {
+  Foodbank.create({
+    foodbank_name: req.body.name,
+    address: req.body.address,
+    city_id: req.body.city_id
+  })
+  .then((dbFoodbankData) => res.json(dbFoodbankData))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
