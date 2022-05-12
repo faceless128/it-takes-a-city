@@ -13,7 +13,11 @@ City.init({
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
+  },
+  stateName: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 },{
   sequelize,
