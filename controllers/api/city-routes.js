@@ -84,3 +84,28 @@ router.put("/:id", withAuth, (req, res) => {
     res.status(500).json(err);
   });
 });
+
+// this route is to DELETE a city by id
+// users will be required to be logged in to use this feature
+router.delete("/:id", withAuth, (req, res) => {
+  City.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+  .then((dbCityData) => {
+    if (!dbCityData) {
+      res.status(404).json({
+        message: "No city found with this id."
+      });
+      return;
+    }
+    res.json(dbCityData);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
+module.exports = router;
