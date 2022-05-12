@@ -87,3 +87,28 @@ router.put("/:id", withAuth, (req, res) => {
       res.status(500).json(err);
     });
 });
+
+// this route is to DELETE a foodbank by id
+// users will be required to be logged in to use this feature
+router.delete("/:id", withAuth, (req, res) => {
+  Foodbank.destory({
+      where: {
+        id: req.params.id,
+      },
+    })
+    .then((dbFoodbankData) => {
+      if (!dbFoodbankData) {
+        res.status(404).json({
+          message: "No foodbank found with this id."
+        });
+        return;
+      }
+      res.json(dbFoodbankData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+module.exports = router;
