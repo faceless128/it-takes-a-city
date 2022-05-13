@@ -34,3 +34,28 @@ router.post("/", withAuth, (req, res) => {
       });
   }
 });
+
+// this route will be for users to DELETE/destroy a comment by id
+// users will be required to be logged in to use this feature
+router.delete("/:id", withAuth, (req, res) => {
+  Comment.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then(dbCommentData => {
+      if (!dbCommentData) {
+        res.status(404).json({
+          message: "No comment found with this id!"
+        });
+        return;
+      }
+      res.json(dbCommentData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+module.exports = router;
