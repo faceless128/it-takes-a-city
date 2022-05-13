@@ -119,4 +119,15 @@ router.post("/login", (req, res) => {
     });
 });
 
+// this route is for users to logout
+router.post("/logout", (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
 module.exports = router;
