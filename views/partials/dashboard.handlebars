@@ -1,1 +1,28 @@
 {{!-- TO DO: Dashboard Set Up - align on if we want this! --}}
+<section>
+    <h2>
+        Share a Resource
+    </h2>
+    <form class="new-resource-form">
+        <div>
+            <label for="resource-title">Resource Title</label>
+            <input type="text" id="resource-title" name="resource-title"/>
+        </div>
+
+        <div>
+            <label for="resource-details">Resource Details</label>
+            <textarea id="resource-details" name="resource-details"></textarea>
+        </div>
+        <button type="submit" class="btn">Create</button>
+    </form>
+    {{#if resources.length}}
+    <section>
+        <h2> Resources You've Shared</h2>
+        <ol>
+            {{#each resources as |resource|}}
+            <li>
+                {{> }}
+            </li>
+        </ol>
+    </section>
+</section>

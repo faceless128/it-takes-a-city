@@ -1,0 +1,7 @@
+<%- include('partials/header') -%>
+
+<% if (locals.isAuthenticated) { %>
+    <p>You are logged in. <a href="/profile" class="underline">View your profile</a>.</p>
+<% }  %>
+
+<%- include('partials/footer') -%>

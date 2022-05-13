@@ -6,48 +6,29 @@ const path = require("path");
 // Require Express
 const express = require("express");
 
-// Require Express Session
-const session = require("express-session");
-
 // Require Handlebars
 const exphbs = require("express-handlebars");
 
 // Set up Helpers - Optional
 const helpers = require("./utils/helpers");
 
+const dotenv = require("dotenv");
+
+const http = require("http");
+
+const logger = require("morgan");
+
+const router = require("./routes/index");
+
+const { auth } = require("express-openid-connect");
+
+dotenv.load();
+
 // Set up App
 const app = express();
 
-// Set up PORT
-
-// Set up requirement with the connection.js file we created
-const PORT = process.env.PORT || 3001;
-
 // Require Sequelize
 const sequelize = require("./config/connection");
-
-// Require Connect Session Sequelize
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
-
-// REQUIREMENTS END //
-
-// Set up Session
-const sess = {
-  // Set up Secret Name
-  secret: "Ultra Top Secret",
-  // Set up Cookie
-  cookie: {},
-  // Set up Resave
-  resave: false,
-  // Set up saveUninitalized to true
-  saveUninitalized: true,
-  // Set up way to store via sequelize
-  store: new SequelizeStore({
-    db: sequelize,
-  }),
-};
-// App Use
-app.use(session(sess));
 
 // Create Helpers - OPTIONAL
 const hbs = exphbs.create({ helpers });
@@ -57,21 +38,54 @@ app.engine("handlebars", hbs.engine);
 // Set up view engine
 app.set("view engine", "handlebars");
 
-// Set up App USE #1 - Express.json()
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
+app.use(logger("dev"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
-// Set up App USE #2 - Urlencoded
-app.use(express.urlencoded({ extended: false }));
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+};
 
-// Set up App USE #3 - sets up "public" file with stylesheets and Javascript to static resources
-app.use(express.static(path.join(__dirname, "public")));
+const PORT = process.env.PORT || 3001;
+if (
+  !config.baseURL &&
+  !process.env.BASE_URL &&
+  process.env.PORT &&
+  process.env.NODE_ENV !== "production"
+) {
+  config.baseURL = `http://localhost:${PORT}`;
+}
 
-// Set up App USE #4 - Controllers
-app.use(require("./controllers/"));
+app.use(auth(config));
 
-// Sequelize Sync
-sequelize.sync({ force: false }).then(() => {
-  // Sets up app listen
-  // With a rocket emoji because ✨ I can ✨
-  app.listen(PORT, () => console.log(`Now listening on ${PORT}! 🚀`));
+// Middleware to make the `user` object available for all views
+app.use(function (req, res, next) {
+  res.locals.user = req.oidc.user;
+  next();
+});
+
+app.use("/", router);
+
+// Catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+
+// Error handlers
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.render("error", {
+    message: err.message,
+    error: process.env.NODE_ENV !== "production" ? err : {},
+  });
+});
+
+http.createServer(app).listen(port, () => {
+  console.log(`Listening on ${config.baseURL}`);
 });
