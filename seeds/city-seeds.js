@@ -21,7 +21,7 @@ const cityData = [
 ];
 
 // Bulk Create Cities
-const seedCity = () => City.bulkCreate(cityData);
+const seedCities = () => City.bulkCreate(cityData);
 
 // Export
-module.exports = seedCity;
+module.exports = seedCities;

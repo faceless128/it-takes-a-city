@@ -1,5 +1,5 @@
 // Require seed for Cities
-const seedCity = require("./city-seeds");
+const seedCities = require("./city-seeds");
 
 // Require seed for Comments
 
@@ -17,9 +17,15 @@ const sequelize = require("../config/connection");
 // Set up Seed ALL function
 const seedAll = async () => {
   await sequelize.sync({ force: true });
+  
+  // SEED #1 - CITIES // 
+  
   // Start up seed file for Cities
-
+  console.log("Sending seeds for cities now...");
+  await seedCities();
+  console.log("Cities have been seeded!");
   // END //
+
 
   // Start up seed file for Comments
 
