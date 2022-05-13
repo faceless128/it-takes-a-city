@@ -74,6 +74,7 @@ router.get("/:id", (req, res) => {
 });
 
 // this route will be for users to POST/create a post
+// users will be required to be logged in to use this feature
 router.post("/", withAuth, (req, res) => {
   console.log("creating");
   Post.create({
@@ -89,6 +90,7 @@ router.post("/", withAuth, (req, res) => {
 });
 
 // this route is for users to PUT/update a post by id
+// users will be required to be logged in to use this feature
 router.put("/:id", withAuth, (req, res) => {
   Post.update({
       title: req.body.title,
@@ -114,6 +116,7 @@ router.put("/:id", withAuth, (req, res) => {
 });
 
 // this route is to DELETE/destroy a post by id
+// users will be required to be logged in to use this feature
 router.delete("/:id", withAuth, (req, res) => {
   Post.destroy({
       where: {
