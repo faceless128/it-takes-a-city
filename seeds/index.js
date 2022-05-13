@@ -3,13 +3,15 @@ const seedCities = require("./city-seeds");
 
 // Require seed for Comments
 const seedComments = require("./comment-seeds");
-// Require seed for Location
 
-// Require seed for LocationTag
+// Require seed for Locations
+const seedLocations = require("./location-seeds");
 
-// Require seed for Post
+// Require seed for LocationTags
 
-// Require seed for User
+// Require seed for Posts
+
+// Require seed for Users
 
 // Require Sequelize
 const sequelize = require("../config/connection");
@@ -33,8 +35,11 @@ const seedAll = async () => {
   console.log("Comments have been seeded!");
   // END //
 
+  // SEED #3 - LOCATIONS //
   // Start up seed file for Location
-
+  console.log("Sending seeds for locations now...");
+  await seedLocations();
+  console.log("Locations have been seeded!");
   // END //
 
   // Start up seed file for LocationTag
@@ -48,7 +53,7 @@ const seedAll = async () => {
   // Start up seed file for User
 
   // END //
-  
+
   // EXIT PROCESS
   process.exit(0);
 };
