@@ -1,13 +1,15 @@
+// Require seed for Cities
+const seedCity = require("./city-seeds");
 
+// Require seed for Comments
 
-// foodbank seeds
-// INSERT INTO foodbank (name, address, foodbank_id)
-// VALUE ("", "")
+// Require seed for Location
 
-// shelter seeds (additional seed if we have time)
-// INSERT INTO shelter (address, name, shelter_id)
-// VALUE ("3535 3rd Ave, Detroit, MI 48201", "Detroit Rescue Mission", 1);
+// Require seed for LocationTag
 
-// manager seeds
-// INSERT INTO manager (first_name, last_name, phone, manager_id)
-// VALUE ("Michael", "Scott", 313-993-6703, 1);
+// Require seed for Post
+
+// Require seed for User
+
+// Require Sequelize
+const sequelize = require("../config/connection");

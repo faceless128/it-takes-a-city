@@ -20,7 +20,7 @@ const cityData = [
   },
 ];
 
-// Bulk Create Comments
+// Bulk Create Cities
 const seedCity = () => City.bulkCreate(cityData);
 
 // Export
