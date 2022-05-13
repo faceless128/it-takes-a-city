@@ -29,7 +29,7 @@ const sequelize = process.env.JAWSDB_URL
         // Dialect Set Up
         dialect: "mysql",
         // Port Set Up
-        port: 3006,
+        port: process.env.DB_PORT,
       }
     );
 
