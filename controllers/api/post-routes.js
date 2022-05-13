@@ -1,3 +1,4 @@
+// REQUIREMENTS //
 const router = require("express").Router();
 const {
   Post,
@@ -8,6 +9,8 @@ const {
 } = require("../../models");
 const sequelize = require("../../config/connection");
 const withAuth = require("../../utils/auth");
+
+// ROUTES //
 
 // this route will GET all posts
 router.get("/", (req, res) => {
@@ -138,4 +141,5 @@ router.delete("/:id", withAuth, (req, res) => {
     });
 });
 
+// EXPORT MODULE //
 module.exports = router;
