@@ -1,15 +1,4 @@
-// TO DO: We could use this if we wanted to create a seeds file for testing purposes
-//  city seeds 
-// INSERT INTO city (name)
-// VALUE ("Detroit");
-// INSERT INTO city (name)
-// VALUE ("Chicago");
-// INSERT INTO city (name)
-// VALUE ("Tampa");
-// INSERT INTO city (name)
-// VALUE ("Denver");
-// INSERT INTO city (name)
-// VALUE ("Tampa");
+
 
 // foodbank seeds
 // INSERT INTO foodbank (name, address, foodbank_id)
