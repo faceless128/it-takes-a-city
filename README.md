@@ -19,13 +19,13 @@ Heroku link is [here](LINK TBD)
 **Technology Used:**
 
 - JavaScript
-- CSS
 - Express.js
 - Handlebars.js
 - Sequelize
 - MySQL2
 - bcrypt
 - dotenv
+- Tailwind
 
 ---
 
