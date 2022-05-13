@@ -2,7 +2,7 @@
 const seedCities = require("./city-seeds");
 
 // Require seed for Comments
-
+const seedComments = require("./comment-seeds");
 // Require seed for Location
 
 // Require seed for LocationTag
@@ -17,18 +17,20 @@ const sequelize = require("../config/connection");
 // Set up Seed ALL function
 const seedAll = async () => {
   await sequelize.sync({ force: true });
-  
-  // SEED #1 - CITIES // 
-  
+
+  // SEED #1 - CITIES //
+
   // Start up seed file for Cities
   console.log("Sending seeds for cities now...");
   await seedCities();
   console.log("Cities have been seeded!");
   // END //
 
-
+  // SEED #2 - COMMENTS //
   // Start up seed file for Comments
-
+  console.log("Sending seeds for comments now...");
+  await seedComments();
+  console.log("Comments have been seeded!");
   // END //
 
   // Start up seed file for Location
@@ -46,4 +48,9 @@ const seedAll = async () => {
   // Start up seed file for User
 
   // END //
+  
+  // EXIT PROCESS
+  process.exit(0);
 };
+// Seed All!
+seedAll();
