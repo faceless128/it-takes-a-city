@@ -96,4 +96,14 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+// this route will redirect users to the signup
+router.get("/signup", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
+  }
+  res.render("signup");
+});
+
 // EXPORT MODULE //
+module.exports = router;
