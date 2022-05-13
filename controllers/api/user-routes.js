@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 // REQUIREMENTS //
 const router = require("express");
+=======
+const router = require("express").Router();
+>>>>>>> 09e1aea98a2d2a7e908dc0e41d675343d8aea769
 const {
   User,
   Post,
