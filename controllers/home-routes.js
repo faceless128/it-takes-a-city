@@ -1,15 +1,14 @@
 // REQUIREMENTS //
-
-// Router
-// Sequelize
-// Models 
+const router = require("express").Router();
+const sequelize = require("../config/connection");
+const {
+  User,
+  Post,
+  Comment,
+  City,
+  Location
+} = require("../models");
 
 // ROUTES //
-
-// Route #1 - Get ALL posts for Homepage //
-
-// Route #2 - Get Single Post // 
-
-// Route #3 - Login Route //
 
 // EXPORT MODULE //
