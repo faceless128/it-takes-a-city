@@ -4,7 +4,9 @@ const sequelize = require("../config/connection");
 const {
   Post,
   User,
-  Comment
+  Comment,
+  City,
+  Location
 } = require("../models");
 const withAuth = require('../utils/auth');
 

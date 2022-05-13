@@ -1,3 +1,4 @@
+// REQUIREMENTS //
 const router = require("express").Router();
 const {
   User,
@@ -7,6 +8,8 @@ const {
   Location
 } = require("../../models");
 const withAuth = require("../../utils/auth");
+
+// ROUTES //
 
 // this route will GET all comments
 router.get("/", (req, res) => {
@@ -58,4 +61,5 @@ router.delete("/:id", withAuth, (req, res) => {
     });
 });
 
+// EXPORT MODULE //
 module.exports = router;
