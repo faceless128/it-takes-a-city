@@ -9,9 +9,6 @@ const express = require("express");
 // Require Handlebars
 const exphbs = require("express-handlebars");
 
-// Set up Helpers - Optional
-const helpers = require("./utils/helpers");
-
 const dotenv = require("dotenv");
 
 const http = require("http");
@@ -29,14 +26,6 @@ const app = express();
 
 // Require Sequelize
 const sequelize = require("./config/connection");
-
-// Create Helpers - OPTIONAL
-const hbs = exphbs.create({ helpers });
-
-// Set up engine
-app.engine("handlebars", hbs.engine);
-// Set up view engine
-app.set("view engine", "handlebars");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
