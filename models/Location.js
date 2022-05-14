@@ -24,7 +24,7 @@ Location.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    city: {
+    resource_city: {
       type: DataTypes.STRING,
       allowNull: false,
     },
