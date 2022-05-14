@@ -16,6 +16,8 @@ const seedPosts = require("./post-seeds");
 // Require seed for Users
 const seedUsers = require("./user-seeds");
 
+const seedTags = require("./tag-seeds");
+
 // Require Sequelize
 const sequelize = require("../config/connection");
 
@@ -44,6 +46,10 @@ const seedAll = async () => {
   await seedLocations();
   console.log("Locations have been seeded!");
   // END //
+
+  console.log("Sending seeds for tags now...");
+  await seedTags();
+  console.log("Tags have been seeded!");
 
   // SEED #4 - LOCATION TAGS //
   // Start up seed file for LocationTag
