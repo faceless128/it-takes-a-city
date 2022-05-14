@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class Location extends Model {}
+class Tag extends Model {}
 
-// this is the Location Model
-Location.init(
+// this is the Tag Model
+Tag.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,7 +12,7 @@ Location.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    location_name: {
+    tag_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -21,7 +21,7 @@ Location.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: "location",
+    modelName: "tag",
   }
 );
 
