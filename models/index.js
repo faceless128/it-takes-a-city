@@ -7,6 +7,10 @@ const Comment = require("./Comment");
 // Require City
 const City = require("./City");
 
+const LocationTag = require("./LocationTag");
+
+const Tag = require("./Tag");
+
 // Require foodbank
 const Location = require("./Location");
 
@@ -42,4 +46,18 @@ Location.belongsTo(City, {
   foreignKey: "city_id",
 });
 
-module.exports = { User, Post, Comment, City, Location };
+// Products belongToMany Tags (through ProductTag)
+Location.belongsToMany(Tag, {
+  through: LocationTag,
+  foreignKey: "location_id",
+  onDelete: "cascade",
+});
+
+// Tags belongToMany Products (through ProductTag)
+Tag.belongsToMany(Location, {
+  through: ProductTag,
+  foreignKey: "tag_id",
+  onDelete: "cascade",
+});
+
+module.exports = { User, Post, Comment, City, Location, LocationTag, Tag };
