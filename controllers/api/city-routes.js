@@ -29,8 +29,8 @@ router.get("/:id", (req, res) => {
         id: req.params.id,
       },
       include: [{
-        model: Foodbank,
-        attributes: ["id", "foodbank_name", "address"]
+        model: City,
+        attributes: ["id", "name", "address"]
       }]
     })
     .then(dbCityData => {
