@@ -8,7 +8,7 @@ const seedComments = require("./comment-seeds");
 const seedLocations = require("./location-seeds");
 
 // Require seed for LocationTags
-const seedlocationTags = require("./locationTag-seeds");
+const seedLocationTag = require("./locationTag-seeds");
 
 // Require seed for Posts
 const seedPosts = require("./post-seeds");
@@ -54,7 +54,7 @@ const seedAll = async () => {
   // SEED #4 - LOCATION TAGS //
   // Start up seed file for LocationTag
   console.log("Sending seeds for location tags now... ");
-  await seedlocationTags();
+  await seedLocationTag();
   console.log("Location tags have been seeded!");
   // END //
 
