@@ -25,6 +25,20 @@ const sequelize = require("../config/connection");
 const seedAll = async () => {
   await sequelize.sync({ force: true });
 
+  // SEED #6 - USERS //
+  // Start up seed file for User
+  console.log("Sending seeds for the users now...");
+  await seedUsers();
+  console.log("Users have been seeded!");
+  // END //
+
+  // SEED #5 - POSTS //
+  // Start up seed file for Post
+  console.log("Sending seeds for posts now... ");
+  await seedPosts();
+  console.log("Posts have been seeded!");
+  // END //
+
   // SEED #1 - CITIES //
 
   // Start up seed file for Cities
@@ -56,20 +70,6 @@ const seedAll = async () => {
   console.log("Sending seeds for location tags now... ");
   await seedLocationTag();
   console.log("Location tags have been seeded!");
-  // END //
-
-  // SEED #5 - POSTS //
-  // Start up seed file for Post
-  console.log("Sending seeds for posts now... ");
-  await seedPosts();
-  console.log("Posts have been seeded!");
-  // END //
-
-  // SEED #6 - USERS //
-  // Start up seed file for User
-  console.log("Sending seeds for the users now...");
-  await seedUsers();
-  console.log("Users have been seeded!");
   // END //
 
   // EXIT PROCESS

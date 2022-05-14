@@ -10,31 +10,26 @@ const userData = [
 
   {
     username: "Christina",
-    password: "password123",
   },
 
   // USER #2 //
   {
     username: "Madison",
-    password: "password123",
   },
 
   // USER #3 //
   {
     username: "Kaijam",
-    password: "password123",
   },
 
   // USER #4 //
   {
     username: "Konner",
-    password: "password123",
   },
 
   // USER #5 //
   {
     username: "Matt",
-    password: "password123",
   },
 ];
 
