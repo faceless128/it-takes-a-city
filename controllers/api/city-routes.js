@@ -1,12 +1,6 @@
 // REQUIREMENTS //
 const router = require("express").Router();
-const {
-  User,
-  Post,
-  Comment,
-  City,
-  Location,
-} = require("../../models");
+const { User, Post, Comment, City, Location } = require("../../models");
 const sequelize = require("../../config/connection");
 const withAuth = require("../../utils/auth");
 
@@ -15,8 +9,8 @@ const withAuth = require("../../utils/auth");
 // this route will GET all cities
 router.get("/", (req, res) => {
   City.findAll()
-    .then(dbCityData => res.json(dbCityData))
-    .catch(err => {
+    .then((dbCityData) => res.json(dbCityData))
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
@@ -25,24 +19,26 @@ router.get("/", (req, res) => {
 // this route will GET one city by id
 router.get("/:id", (req, res) => {
   City.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: [{
+    where: {
+      id: req.params.id,
+    },
+    include: [
+      {
         model: City,
-        attributes: ["id", "name", "address"]
-      }]
-    })
-    .then(dbCityData => {
+        attributes: ["id", "name", "address"],
+      },
+    ],
+  })
+    .then((dbCityData) => {
       if (!dbCityData) {
         res.status(404).json({
-          message: "No city found with this id."
+          message: "No city found with this id.",
         });
         return;
       }
       res.json(dbCityData);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
@@ -52,9 +48,9 @@ router.get("/:id", (req, res) => {
 // users will be required to be logged in to use this feature
 router.post("/", withAuth, (req, res) => {
   City.create({
-      name: req.body.name,
-      stateName: req.body.stateName
-    })
+    name: req.body.name,
+    stateName: req.body.stateName,
+  })
     .then((dbCityData) => res.json(dbCityData))
     .catch((err) => {
       console.log(err);
@@ -65,18 +61,21 @@ router.post("/", withAuth, (req, res) => {
 // this route will PUT/update a city. Option in case user entered new city incorrectly
 // users will be required to be logged in to use this feature
 router.put("/:id", withAuth, (req, res) => {
-  City.update({
+  City.update(
+    {
       name: req.body.name,
-      stateName: req.body.stateName
-    }, {
+      stateName: req.body.stateName,
+    },
+    {
       where: {
         id: req.params.id,
       },
-    })
+    }
+  )
     .then((dbCityData) => {
       if (!dbCityData) {
         res.status(404).json({
-          message: "No city found with this id."
+          message: "No city found with this id.",
         });
         return;
       }
@@ -92,14 +91,14 @@ router.put("/:id", withAuth, (req, res) => {
 // users will be required to be logged in to use this feature
 router.delete("/:id", withAuth, (req, res) => {
   City.destroy({
-      where: {
-        id: req.params.id,
-      },
-    })
+    where: {
+      id: req.params.id,
+    },
+  })
     .then((dbCityData) => {
       if (!dbCityData) {
         res.status(404).json({
-          message: "No city found with this id."
+          message: "No city found with this id.",
         });
         return;
       }
