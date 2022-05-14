@@ -53,7 +53,7 @@ Location.belongsToMany(Tag, {
 });
 
 Tag.belongsToMany(Location, {
-  through: ProductTag,
+  through: LocationTag,
   foreignKey: "tag_id",
   onDelete: "cascade",
 });
