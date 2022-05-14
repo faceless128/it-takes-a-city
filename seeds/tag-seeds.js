@@ -2,7 +2,16 @@ const { Tag } = require("../models");
 
 const TagData = [
   {
-    // DATA TO GO HERE //
+    id: 1,
+    tag_name: "Shelter",
+  },
+  {
+    id: 2,
+    tag_name: "Food",
+  },
+  {
+    id: 3,
+    tag_name: "Clothing",
   },
 ];
 
