@@ -23,13 +23,7 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: [4]
-    }
-  }
+ 
 }, {
   hooks: {
     // set up beforeCreate lifecycle "hook" functionality

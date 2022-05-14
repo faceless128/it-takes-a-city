@@ -46,16 +46,14 @@ Location.belongsTo(City, {
   foreignKey: "city_id",
 });
 
-// Products belongToMany Tags (through ProductTag)
 Location.belongsToMany(Tag, {
   through: LocationTag,
   foreignKey: "location_id",
   onDelete: "cascade",
 });
 
-// Tags belongToMany Products (through ProductTag)
 Tag.belongsToMany(Location, {
-  through: ProductTag,
+  through: LocationTag,
   foreignKey: "tag_id",
   onDelete: "cascade",
 });

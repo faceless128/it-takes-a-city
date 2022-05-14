@@ -2,7 +2,12 @@ const { LocationTag } = require("../models");
 
 const locationTagData = [
   {
-    // DATA TO GO HERE //
+    location_id: 1,
+    tag_id: 1,
+  },
+  {
+    location_id: 2,
+    tag_id: 1,
   },
 ];
 

@@ -45,18 +45,6 @@ Comment.init(
       },
     },
 
-    // From CW - Not sure if this is accurate - would appreciate a review! //
-    // COLUMN #4 - USER NAME //
-    user_name: {
-      // Sets Data Type to String
-      type: DataTypes.STRING,
-      // References User Model - Name (?) not sure if we will have this
-      references: {
-        model: "user",
-        key: "name",
-      },
-    },
-
     // COLUMN #5 - POST ID //
     post_id: {
       // Sets Data Type to Integer
