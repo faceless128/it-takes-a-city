@@ -9,7 +9,7 @@ const {
   LocationTag,
   Tag
 } = require("../../models");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
@@ -23,14 +23,38 @@ router.get("/", (req, res) => {
     });
 });
 
+// this route will GET a Location by id
+router.get("/:id", (req, res) => {
+    Tag.findOne({
+        where: {
+          id: req.params.id,
+        },
+        include: [{
+          model: Location,
+          attributes: ["id", "location_name", "address"],
+        }, ],
+      })
+      .then((dbTagData) => {
+        if (!dbTagData) {
+          res.status(404).json({
+            message: "No Tag found with this ID.",
+          });
+          return;
+        }
+        res.json(dbTagData);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+  
 // this route is for a user to POST/create a tag
 // users will be required to be logged in to use this feature
-router.post("/", withAuth, (req, res) => {
+router.post("/", requiresAuth(), (req, res) => {
   if (req.session) {
     Tag.create({
-        comment_text: req.body.comment_text,
-        post_id: req.body.post_id,
-        user_id: req.session.user_id
+      tag_name: req.body.tag_name
       })
       .then(dbTagData => res.json(dbTagData))
       .catch(err => {
@@ -42,7 +66,7 @@ router.post("/", withAuth, (req, res) => {
 
 // this route will be for users to DELETE/destroy a tag by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", withAuth, (req, res) => {
+router.delete("/:id", requiresAuth(), (req, res) => {
   Tag.destroy({
       where: {
         id: req.params.id
