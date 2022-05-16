@@ -7,7 +7,7 @@ const {
   City,
   Location
 } = require("../../models");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 
 // this route is for a user to POST/create a comment
 // users will be required to be logged in to use this feature
-router.post("/", withAuth, (req, res) => {
+router.post("/", requiresAuth(), (req, res) => {
   if (req.session) {
     Comment.create({
         comment_text: req.body.comment_text,
@@ -40,7 +40,7 @@ router.post("/", withAuth, (req, res) => {
 
 // this route will be for users to DELETE/destroy a comment by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", withAuth, (req, res) => {
+router.delete("/:id", requiresAuth(), (req, res) => {
   Comment.destroy({
       where: {
         id: req.params.id

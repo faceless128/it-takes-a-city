@@ -2,7 +2,7 @@
 const router = require("express").Router();
 const { User, Post, Comment, City, Location } = require("../../models");
 const sequelize = require("../../config/connection");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
@@ -46,7 +46,7 @@ router.get("/:id", (req, res) => {
 
 // this route will POST/create a city
 // users will be required to be logged in to use this feature
-router.post("/", withAuth, (req, res) => {
+router.post("/", requiresAuth(), (req, res) => {
   City.create({
     name: req.body.name,
     stateName: req.body.stateName,
@@ -60,7 +60,7 @@ router.post("/", withAuth, (req, res) => {
 
 // this route will PUT/update a city. Option in case user entered new city incorrectly
 // users will be required to be logged in to use this feature
-router.put("/:id", withAuth, (req, res) => {
+router.put("/:id", requiresAuth(), (req, res) => {
   City.update(
     {
       name: req.body.name,
@@ -89,7 +89,7 @@ router.put("/:id", withAuth, (req, res) => {
 
 // this route is to DELETE a city by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", withAuth, (req, res) => {
+router.delete("/:id", requiresAuth(), (req, res) => {
   City.destroy({
     where: {
       id: req.params.id,
