@@ -8,7 +8,7 @@ const {
   Location,
 } = require("../../models");
 const sequelize = require("../../config/connection");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
@@ -16,7 +16,7 @@ const withAuth = require("../../utils/auth");
 router.get("/", (req, res) => {
   User.findAll({
       attributes: {
-        exclude: ["password"]
+        exclude: ["email"]
       }
     })
     .then(dbUserData => res.json(dbUserData))
@@ -30,7 +30,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   User.findOne({
       attributes: {
-        exclude: ["password"]
+        exclude: ["email"]
       },
       where: {
         id: req.params.id
