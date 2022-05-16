@@ -5,7 +5,9 @@ const {
   Post,
   Comment,
   City,
-  Location
+  Location,
+  Tag,
+  LocationTag
 } = require("../../models");
 const sequelize = require("../../config/connection");
 const { requiresAuth } = require('express-openid-connect');
@@ -28,11 +30,14 @@ router.get("/:id", (req, res) => {
       where: {
         id: req.params.id,
       },
-      attributes: ["id", "location_name", "address"],
       include: [{
         model: City,
         attributes: ["name", "stateName"],
-      }, ],
+      }],
+      include: [{
+        model: Tag,
+        attributes: ["tag_name"],
+      }],
     })
     .then((dbLocationData) => {
       if (!dbLocationData) {

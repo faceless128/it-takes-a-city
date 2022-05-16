@@ -39,7 +39,7 @@ Comment.belongsTo(Post, {
 });
 
 City.hasMany(Location, {
-  foreignKey: "location_id",
+  foreignKey: "city_id",
 });
 
 Location.belongsTo(City, {

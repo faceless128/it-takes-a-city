@@ -31,8 +31,8 @@ router.get("/:id", (req, res) => {
         },
         include: [{
           model: Location,
-          attributes: ["id", "location_name", "address"],
-        }, ],
+          attributes: ["id", "location_name", "address", "state", "resource_city", "zip_code"],
+        }],
       })
       .then((dbTagData) => {
         if (!dbTagData) {

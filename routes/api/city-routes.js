@@ -25,7 +25,7 @@ router.get("/:id", (req, res) => {
     include: [
       {
         model: Location,
-        attributes: ["id", "location_name", "address", "resource_city", "state"],
+        attributes: ["id", "location_name", "address", "resource_city", "state", "zip_code"],
       },
     ],
   })
