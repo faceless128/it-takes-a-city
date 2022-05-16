@@ -1,5 +1,5 @@
 // REQUIREMENTS //
-const router = require("express");
+const router = require("express").Router();
 const {
   User,
   Post,
@@ -8,7 +8,7 @@ const {
   Location
 } = require("../../models");
 const sequelize = require("../../config/connection");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
@@ -51,7 +51,7 @@ router.get("/:id", (req, res) => {
 
 // this route will POST/ add a Location
 // users will be required to be logged in to use this feature
-router.post("/", withAuth, (req, res) => {
+router.post("/", requiresAuth(), (req, res) => {
   Location.create({
       Location_name: req.body.foodbank_name,
       address: req.body.address,
@@ -66,7 +66,7 @@ router.post("/", withAuth, (req, res) => {
 
 // this route will PUT/update a Location by id
 // users will be required to be logged in to use this feature
-router.put("/:id", withAuth, (req, res) => {
+router.put("/:id", requiresAuth(), (req, res) => {
   Location.update({
       Location_name: req.body.location_name,
       address: req.body.address,
@@ -93,7 +93,7 @@ router.put("/:id", withAuth, (req, res) => {
 
 // this route is to DELETE a Location by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", withAuth, (req, res) => {
+router.delete("/:id", requiresAuth(), (req, res) => {
   Location.destroy({
       where: {
         id: req.params.id,
