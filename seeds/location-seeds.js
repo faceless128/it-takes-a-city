@@ -9,7 +9,7 @@ const locationData = [
     state: "Michigan",
     resource_city: "Detroit",
     zip_code: 48201,
-    location_id: 3,
+    city_id: 3,
   },
   {
     location_name: "Shelter B",
@@ -17,7 +17,7 @@ const locationData = [
     state: "Illinois",
     resource_city: "Chicago",
     zip_code: 60131,
-    location_id: 2,
+    city_id: 2,
   },
 ];
 
