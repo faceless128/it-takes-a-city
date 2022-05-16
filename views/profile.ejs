@@ -1,8 +1,6 @@
 
 <%- include('partials/header') -%>
 
-<% if (locals.userProfile) { %>
-    <p><%= locals.userProfile %>.</p>
-<% }  %>
+<p> Hello <a href='mailto:<%= locals.userProfile.email %>'><%= locals.userProfile.name %></a>.</p>
 
 <%- include('partials/footer') -%>

@@ -10,8 +10,8 @@ router.get('/', function (req, res, next) {
 
 router.get('/profile', requiresAuth(), function (req, res, next) {
   res.render('profile', {
-    userProfile: JSON.stringify(req.oidc.user, null, 2),
-    title: 'Profile page'
+    title: 'Profile page',
+    userProfile: req.oidc.user
   });
 });
 
