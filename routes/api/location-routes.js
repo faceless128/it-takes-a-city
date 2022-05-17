@@ -30,14 +30,16 @@ router.get("/:id", (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [{
-        model: City,
-        attributes: ["name", "stateName"],
-      }],
-      include: [{
-        model: Tag,
-        attributes: ["tag_name"],
-      }],
+      include: [
+        {
+          model: City,
+          attributes: ["name", "stateName"],
+        },
+        {
+          model: Tag,
+          attributes: ["tag_name"],
+        }
+      ]
     })
     .then((dbLocationData) => {
       if (!dbLocationData) {
