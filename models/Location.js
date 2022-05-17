@@ -24,7 +24,7 @@ Location.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    city: {
+    resource_city: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -34,9 +34,8 @@ Location.init(
       // Validation for 10 characters for the zip code
       validate: { len: [10] },
     },
-    location_id: {
+    city_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: "city",
         key: "id",
