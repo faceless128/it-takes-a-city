@@ -26,6 +26,33 @@ router.get("/", (req, res) => {
     });
 });
 
+// this route is to DELETE a user by email
+router.get("/me", requiresAuth(), (req, res) => {
+  User.findOne({
+    where: {
+        email: req.oidc.user.email
+    }
+})
+.then(getUserID => {
+    User.findOne({
+        where: {
+            id: getUserID.id
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+  })
+});
+
 // this route will GET one user by id
 router.get("/:id", (req, res) => {
   User.findOne({
@@ -104,24 +131,29 @@ router.put("/", requiresAuth(), (req, res) => {
 
 // this route is to DELETE a user by email
 router.delete("/", requiresAuth(), (req, res) => {
-  User.destroy({
+  User.findOne({
     where: {
-      email: req.body.email
+        email: req.oidc.user.email
     }
-  })
+})
+.then(getUserID => {
+    User.destroy({
+        where: {
+            id: getUserID.id
+        }
+    })
     .then(dbUserData => {
-      if (!dbUserData) {
-        res.status(404).json({
-          message: "No user found with this email!"
-        });
-        return;
-      }
-      res.json(dbUserData);
+        if (!dbUserData) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
     })
     .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+        console.log(err);
+        res.status(500).json(err);
     });
+  })
 });
 
 // EXPORT MODULE //
