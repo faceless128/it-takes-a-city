@@ -1,7 +1,10 @@
 <%- include('partials/header') -%>
 
 <% if (locals.isAuthenticated) { %>
-    <p>You are logged in. <a href="/profile" class="underline">View your profile</a>.</p>
+   <div class="posts">
+    <button class="loadPosts" id="fetch-button">Click me</button>
+   </div>
+   <script type="javascript" src="/javascripts/script.js"></script>
 <% }  %>
 
 <%- include('partials/footer') -%>
