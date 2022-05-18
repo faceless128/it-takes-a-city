@@ -26,12 +26,16 @@ Heroku link is [here](LINK TBD)
 - bcrypt
 - dotenv
 - Tailwind
+- Auth0
+
+
 
 ---
 
 **Installation:**
 
 No installation necessary - head to the Heroku link to interact with the deployed site.
+
 
 ---
 
