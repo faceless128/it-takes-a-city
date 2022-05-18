@@ -7,7 +7,8 @@ router.use("/api", apiRoutes);
 router.get('/', function (req, res, next) {
   res.render('index', {
     title: 'Auth0 Webapp sample Nodejs',
-    isAuthenticated: req.oidc.isAuthenticated()
+    isAuthenticated: req.oidc.isAuthenticated(),
+    userProfile: req.oidc.user
   });
 });
 
