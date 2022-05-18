@@ -88,7 +88,7 @@ router.post("/", requiresAuth(), (req, res) => {
   .then(getUserID => {
     Post.create({
       title: req.body.title,
-      content: req.body.post_content,
+      content: req.body.content,
       user_id: getUserID.id
     })
     .then((dbPostData) => res.json(dbPostData))

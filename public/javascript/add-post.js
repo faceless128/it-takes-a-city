@@ -3,19 +3,17 @@ async function newFormHandler(event) {
   event.preventDefault();
 
   // Sets title to query selector with post-title
-  const title = document.querySelector("").value;
+  const title = document.querySelector('input[name="post-title"]').value;
 
   // Sets post_url to query selector with post-url
-  const post_data = document.querySelector("").value;
+  const post_content = document.querySelector('textarea[name="post-data"]').value;
 
   // Response for POST
   const response = await fetch(`/api/posts`, {
     method: "POST",
     body: JSON.stringify({
       title,
-      // Add in the user_id - we need something in our database table
-      user_id,
-      post_data,
+      post_content
     }),
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +22,7 @@ async function newFormHandler(event) {
 
   // If Response is OK - do the following
   if (response.ok) {
-    document.location.replace("/dashboard");
+    document.location.replace("/profile");
   } else {
     alert(response.statusText);
   }
