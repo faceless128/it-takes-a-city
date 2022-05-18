@@ -83,7 +83,7 @@ router.post("/", requiresAuth(), (req, res) => {
   Post.create({
       title: req.body.title,
       content: req.body.post_content,
-      user_id: req.session.user_id
+      user_id: req.body.user_id
     })
     .then((dbPostData) => res.json(dbPostData))
     .catch((err) => {
@@ -120,7 +120,7 @@ router.put("/:id", requiresAuth(), (req, res) => {
 
 // this route is to DELETE/destroy a post by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", requiresAuth(), (req, res) => {
+router.delete("/:id", (req, res) => {
   Post.destroy({
       where: {
         id: req.params.id,
