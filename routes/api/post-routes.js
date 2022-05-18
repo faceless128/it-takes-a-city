@@ -80,16 +80,23 @@ router.get("/:id", (req, res) => {
 // users will be required to be logged in to use this feature
 router.post("/", requiresAuth(), (req, res) => {
   console.log("creating");
-  Post.create({
+  User.findOne({
+    where: {
+        email: req.oidc.user.email
+    }
+  })
+  .then(getUserID => {
+    Post.create({
       title: req.body.title,
-      content: req.body.post_content,
-      user_id: req.body.user_id
+      content: req.body.content,
+      user_id: getUserID.id
     })
     .then((dbPostData) => res.json(dbPostData))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
+  });
 });
 
 // this route is for users to PUT/update a post by id
@@ -120,7 +127,7 @@ router.put("/:id", requiresAuth(), (req, res) => {
 
 // this route is to DELETE/destroy a post by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", (req, res) => {
+router.delete("/:id", requiresAuth(), (req, res) => {
   Post.destroy({
       where: {
         id: req.params.id,

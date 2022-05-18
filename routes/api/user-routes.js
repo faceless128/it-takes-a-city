@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// this route is to DELETE a user by email
+// this route is to get the currently logged in user
 router.get("/me", requiresAuth(), (req, res) => {
   User.findOne({
     where: {
@@ -50,7 +50,7 @@ router.get("/me", requiresAuth(), (req, res) => {
         console.log(err);
         res.status(500).json(err);
     });
-  })
+  });
 });
 
 // this route will GET one user by id
@@ -105,7 +105,6 @@ router.post("/", (req, res) => {
       res.status(500).json(err);
     });
 });
-
 // this route is to update (PUT) a user by email
 router.put("/", requiresAuth(), (req, res) => {
   User.update(req.body, {
