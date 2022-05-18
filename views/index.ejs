@@ -1,11 +1,12 @@
 <head>
-  <link rel="stylesheet" href="css\style.css">
+ 
 </head>
 <%- include('partials/header') -%>
 
 <% if (locals.isAuthenticated) { %>
-  <div class ="addPosts">
-    
+  <div class ="AboutUs">
+    <h1>About Us</h1>
+    <p>These are food bank locations you can add them and their addresses, any post help people in need, Thanks!</p>
   </div>
    <div class="posts">
 
@@ -26,13 +27,13 @@
       for(var i =0;i<data.length;i++){
       //Using console.log to examine the data
       var x=0
-      var locationName = document.createElement("h1");
       var locationAddress = document.createElement("h2");
       var userPost = document.createElement("p");
+      var locationName = document.createElement("h1");
       var userNameComment = document.createElement("p")
       var comments = document.createElement("p")
-      comments.classList.add('comments');
-      userNameComment.classList.add('userNameComments');
+      comments.classList.add('comments', "ml-10");
+      userNameComment.classList.add('userNameComments','ml-10',);
        
       //Setting the text of the h3 element and p element.
       locationName.textContent = data[i].content;
@@ -42,19 +43,13 @@
       
       //Appending the dynamically generated html to the div associated with the id="users"
       //Append will attach the element as the bottom most child.
-      postContainer.append(locationName);
       postContainer.append(locationAddress);
       postContainer.append(userPost);
+      postContainer.append(locationName);
       userNameComment.textContent = data[i].comments[x].user.username;
       comments.textContent = data[i].comments[x].comment_text;
       postContainer.append(userNameComment)
-      postContainer.append(comments)
-      
-      userNameComment.textContent = data[i].comments[x].user.username;
-      comments.textContent = data[i].comments[x].comment_text;
-      postContainer.append(userNameComment)
-      postContainer.append(comments)
-      
+      postContainer.append(comments)     
 
       }
     });
