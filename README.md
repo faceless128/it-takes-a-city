@@ -23,7 +23,6 @@ Heroku link is [here](LINK TBD)
 - Handlebars.js
 - Sequelize
 - MySQL2
-- bcrypt
 - dotenv
 - Tailwind
 - Auth0
