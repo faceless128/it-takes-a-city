@@ -36,7 +36,7 @@ Heroku link is [here](LINK TBD)
 
 No installation necessary - head to the Heroku link to interact with the deployed site.
 
-
+Development installation- Clone from the repository on GitHub. Then in the command line of node.js, use the command "npm install" to get the proper modules installed. Then run mysql and run the schema file. Finally, you can seed the database with npm run seeds. 
 ---
 
 **Screenshot**
