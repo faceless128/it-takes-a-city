@@ -1,0 +1,18 @@
+/* Font size larger for H1 */
+h1{
+    font-size: large;
+}
+/* Font size large for H2 */
+h2{
+    font-size: medium;
+}
+/* Comments class - margin left and bolded  */
+.comments{
+    margin-left: 2.5%;
+}
+/* userNameComments class - margin left */
+
+.userNameComments{
+    margin-left: 2.5%;
+    font-weight: bold;
+}

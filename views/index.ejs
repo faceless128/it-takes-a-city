@@ -1,7 +1,64 @@
+<head>
+  <link rel="stylesheet" href="css\style.css">
+</head>
 <%- include('partials/header') -%>
 
 <% if (locals.isAuthenticated) { %>
-    <p>You are logged in. <a href="/profile" class="underline">View your profile</a>.</p>
+  <div class ="addPosts">
+    
+  </div>
+   <div class="posts">
+
+   </div>
 <% }  %>
 
 <%- include('partials/footer') -%>
+<script>
+  function getPosts () {
+    var postContainer = document.querySelector(".posts");
+    console.log(postContainer)
+    var requestUrl ="http://localhost:3000/api/posts/"
+    fetch(requestUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      for(var i =0;i<data.length;i++){
+      //Using console.log to examine the data
+      var x=0
+      var locationName = document.createElement("h1");
+      var locationAddress = document.createElement("h2");
+      var userPost = document.createElement("p");
+      var userNameComment = document.createElement("p")
+      var comments = document.createElement("p")
+      comments.classList.add('comments');
+      userNameComment.classList.add('userNameComments');
+       
+      //Setting the text of the h3 element and p element.
+      locationName.textContent = data[i].content;
+      locationAddress.textContent = data[i].title;
+      userPost.textContent = data[i].user.username;
+      
+      
+      //Appending the dynamically generated html to the div associated with the id="users"
+      //Append will attach the element as the bottom most child.
+      postContainer.append(locationName);
+      postContainer.append(locationAddress);
+      postContainer.append(userPost);
+      userNameComment.textContent = data[i].comments[x].user.username;
+      comments.textContent = data[i].comments[x].comment_text;
+      postContainer.append(userNameComment)
+      postContainer.append(comments)
+      
+      userNameComment.textContent = data[i].comments[x].user.username;
+      comments.textContent = data[i].comments[x].comment_text;
+      postContainer.append(userNameComment)
+      postContainer.append(comments)
+      
+
+      }
+    });
+}
+getPosts();
+
+</script>
