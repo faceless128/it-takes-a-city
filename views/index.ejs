@@ -1,6 +1,3 @@
-<head>
-  <script type="javascript" src="/javascripts/script.js"></script>
-</head>
 <%- include('partials/header') -%>
 
 <% if (locals.isAuthenticated) { %>
@@ -15,7 +12,8 @@
 
 
   function getPosts () {
-    var postContainer = document.getElementById("#posts");
+    var postContainer = document.querySelector(".posts");
+    console.log(postContainer)
     var requestUrl ="http://localhost:3000/api/posts/"
     fetch(requestUrl)
     .then(function (response) {
@@ -28,7 +26,7 @@
       var locationName = document.createElement("h1");
       var locationAddress = document.createElement("h2");
       var userPost = document.createElement("p");
-
+        
       //Setting the text of the h3 element and p element.
       locationName.textContent = data[i].content;
       locationAddress.textContent = data[i].title;
