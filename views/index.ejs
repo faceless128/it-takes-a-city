@@ -10,7 +10,7 @@
       <p class="font-medium">These are resources shared by those in our community - we hope these help you!
       </p>
     </div>
-    <div class=" py-5 posts">
+    <div class="py-5 posts">
 
     </div>
     <% } else { %>
@@ -21,49 +21,84 @@
 
 
         <%- include('partials/footer') -%>
-          <script>
-            function getPosts() {
-              var postContainer = document.querySelector(".posts");
-              console.log(postContainer)
-              var requestUrl = "http://localhost:3000/api/posts/"
-              fetch(requestUrl)
-                .then(function (response) {
-                  return response.json();
-                })
-                .then(function (data) {
-                  for (var i = 0; i < data.length; i++) {
-                    //Using console.log to examine the data
+        <script>
+          function getPosts() {
+            var postContainer = document.querySelector(".posts");
+            console.log(postContainer)
+            var requestUrl = "http://localhost:3000/api/posts/"
+            fetch(requestUrl)
+              .then(function (response) {
+                return response.json();
+              })
+              .then(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                  //Using console.log to examine the data
+                  
+                  var locationAddress = document.createElement("h2");
+                  var userPost = document.createElement("p");
+                  var locationName = document.createElement("h1");
+                  var userNameComment = document.createElement("p");
+                  var comments = document.createElement("p");
+                  var commentInput = document.createElement("input");
+                  var commentButton = document.createElement("button");
+                  comments.classList.add('comments', "ml-10", "text-base");
+                  userNameComment.classList.add('userNameComments', 'ml-10', "text-lg",);
+                  userPost.classList.add("text-base", "text-lg", "bold", "py-2")
+                  locationAddress.classList.add("semibold", "text-xl", "text-base", "py-2")
 
-                    var locationAddress = document.createElement("h2");
-                    var userPost = document.createElement("p");
-                    var locationName = document.createElement("h1");
-                    userPost.classList.add("text-base", "text-lg", "bold", "py-5")
-                    locationAddress.classList.add("semibold", "text-xl", "text-base", "py-5")
-
-                    //Setting the text of the h3 element and p element.
-                    locationName.textContent = data[i].content;
-                    locationAddress.textContent = data[i].title;
-                    userPost.textContent = data[i].user.username;
+                  //Setting the text of the h3 element and p element.
+                  locationName.textContent = data[i].content;
+                  locationAddress.textContent = data[i].title;
+                  userPost.textContent = data[i].user.username;
 
 
-                    //Appending the dynamically generated html to the div associated with the id="users"
-                    //Append will attach the element as the bottom most child.
-                    postContainer.append(locationAddress);
-                    postContainer.append(locationName);
-                    for (x = 0; x < data[i].comments.length; x++) {
-                      // for loop to add comments after each post
-                      var userNameComment = document.createElement("p");
-                      var comments = document.createElement("p");
-                      userNameComment.classList.add('userNameComments', 'ml-10', "text-lg");
-                      comments.classList.add('comments', "ml-10", "text-base");
-                      userNameComment.textContent = data[i].comments[x].user.username;
-                      comments.textContent = data[i].comments[x].comment_text;
-                      postContainer.append(userNameComment);
-                      postContainer.append(comments);
-                    }
+                  //Appending the dynamically generated html to the div associated with the id="users"
+                  //Append will attach the element as the bottom most child.
+                  postContainer.append(locationAddress);
+                  postContainer.append(userPost);
+                  postContainer.append(locationName);
+                  postContainer.innerHTML+="<input type='text' id="+data[i].id+"comment"+" name='comment-text' class='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>"+"<button onclick='addComment()''  id="+data[i].id+"  type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>"+"Add Comment"+"</button>";
+                  for(var x=0;x<data[i].comments.length;x++){
+                  userNameComment.textContent = data[i].comments[x].user.username;
+                  comments.textContent = data[i].comments[x].comment_text;
+                  postContainer.innerHTML+= "<p class='ml-10', 'text-lg'>" + userNameComment.textContent + "</p>";
+                  postContainer.innerHTML+= "<p class='ml-10', 'text-base'>" + comments.textContent+"</p>";
                   }
-                });
-            }
-            getPosts();
 
-          </script>
+                }
+              });
+          }
+          getPosts();
+
+         
+  function addComment(){
+    // Sets comment to query selector with comment-text
+    console.log(event.srcElement.id)
+    console.log(document.getElementById(event.srcElement.id+"comment").value)
+    const comment_text = document.getElementById(event.srcElement.id+"comment").value;
+ 
+
+    // sets post ID for the comment, currently hardcoded to 4
+    const post_id = event.srcElement.id;
+  
+    // Response for POST
+    const response = fetch(`/api/comments`, {
+      method: "POST",
+      body: JSON.stringify({
+        comment_text,
+        post_id
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  
+    // If Response is OK - do the following
+    if (response.ok) {
+      document.location.replace("/");
+    } else {
+      document.location.replace("/");
+    }
+  }
+
+        </script>

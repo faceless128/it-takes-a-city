@@ -6,7 +6,7 @@ async function newFormHandler(event) {
     const comment_text = document.querySelector('input[name="comment-text"]').value;
 
     // sets post ID for the comment, currently hardcoded to 4
-    const post_id = 4;
+    const post_id = this.id;
   
     // Response for POST
     const response = await fetch(`/api/comments`, {
@@ -22,7 +22,7 @@ async function newFormHandler(event) {
   
     // If Response is OK - do the following
     if (response.ok) {
-      document.location.replace("/profile");
+      document.location.replace("/");
     } else {
       alert(response.statusText);
     }
