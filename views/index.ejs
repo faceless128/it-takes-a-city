@@ -1,5 +1,5 @@
 <head>
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <%- include('partials/header') -%>
 
@@ -27,16 +27,19 @@
               .then(function (data) {
                 for (var i = 0; i < data.length; i++) {
                   //Using console.log to examine the data
-                  var x = 0
+                  
                   var locationAddress = document.createElement("h2");
                   var userPost = document.createElement("p");
                   var locationName = document.createElement("h1");
-                  var userNameComment = document.createElement("p")
-                  var comments = document.createElement("p")
+                  var userNameComment = document.createElement("p");
+                  var comments = document.createElement("p");
+                  var commentInput = document.createElement("input");
+                  var commentButton = document.createElement("button");
                   comments.classList.add('comments', "ml-10", "text-base");
                   userNameComment.classList.add('userNameComments', 'ml-10', "text-lg",);
                   userPost.classList.add("text-base", "bold")
-                  locationAddress.classList.add("italic text-base")
+                  locationAddress.classList.add("italic", "text-base")
+                 
 
                   //Setting the text of the h3 element and p element.
                   locationName.textContent = data[i].content;
@@ -49,10 +52,13 @@
                   postContainer.append(locationAddress);
                   postContainer.append(userPost);
                   postContainer.append(locationName);
+                  postContainer.innerHTML+="<input>"+"<button type='button' class='btn, btn-primary'>"+"Add Post"+"</button>";
+                  for(var x=0;x<data[i].comments.length;x++){
                   userNameComment.textContent = data[i].comments[x].user.username;
                   comments.textContent = data[i].comments[x].comment_text;
-                  postContainer.append(userNameComment)
-                  postContainer.append(comments)
+                  postContainer.innerHTML+= "<p class='ml-10', 'text-lg'>" + userNameComment.textContent + "<br/>";
+                  postContainer.innerHTML+= "<p class='ml-10', 'text-base'>" + comments.textContent+ +"</p>";
+                  }
 
                 }
               });
