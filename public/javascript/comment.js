@@ -2,10 +2,11 @@ async function newFormHandler(event) {
     // Prevents default from happening
     event.preventDefault();
   
-    // Sets title to query selector with post-title
+    // Sets comment to query selector with comment-text
     const comment_text = document.querySelector('input[name="comment-text"]').value;
-  
-    const post_id = 6;
+
+    // sets post ID for the comment, currently hardcoded to 4
+    const post_id = 4;
   
     // Response for POST
     const response = await fetch(`/api/comments`, {
