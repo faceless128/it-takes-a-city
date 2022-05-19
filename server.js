@@ -41,12 +41,14 @@ const config = {
 
 const PORT = process.env.PORT || 3001;
 if (
-  !config.baseURL &&
+  // !config.baseURL &&
   !process.env.BASE_URL &&
   process.env.PORT &&
   process.env.NODE_ENV !== "production"
 ) {
   config.baseURL = `http://localhost:${PORT}`;
+} else {
+  config.baseURL = process.env.BASE_URL;
 }
 
 app.use(auth(config));
