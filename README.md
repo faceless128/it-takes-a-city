@@ -6,7 +6,7 @@ It Takes A City
 
 **Project Description/Summary:**
 
-An application that provides information for people in need of resources (e.g. food, shelters, etc.) - we would focus on one city and the food bank resources available for those experiencing food insecurity. As a user, they would have the ability to add a new food bank URL for a resource and add it to the database. They would be able to also rate each resource provided via the five star npm package.
+An application that provides information for people in need of resources (e.g. food, shelters, etc.). As a user, they would have the ability to add a new food bank information as a resource and add it to the database. Other logged in users can comment on the various posts.
 
 ---
 
@@ -20,7 +20,6 @@ Heroku link is [here](LINK TBD)
 
 - JavaScript
 - Express.js
-- EJS
 - Sequelize
 - MySQL2
 - dotenv
