@@ -48,7 +48,7 @@ if (
 ) {
   config.baseURL = `http://localhost:${PORT}`;
 } else {
-  config.baseURL = `http://it-takes-a-city-app.herokuapp.com`
+  config.baseURL = `http://${process.env.HEROKU_APP_NAME}.herokuapp.com`
 }
 
 app.use(auth(config));
