@@ -22,7 +22,8 @@ async function newFormHandler(event) {
 
   // If Response is OK - do the following
   if (response.ok) {
-    document.location.replace("/profile");
+    document.location.replace("/");
+
   } else {
     alert(response.statusText);
   }
