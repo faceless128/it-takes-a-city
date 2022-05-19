@@ -24,22 +24,39 @@ router.get("/", (req, res) => {
 // this route is for a user to POST/create a comment
 // users will be required to be logged in to use this feature
 router.post("/", requiresAuth(), (req, res) => {
+  // gets user email from auth0 and searches for email in DB
   User.findOne({
     where: {
         email: req.oidc.user.email
     }
   })
+  // if user exists, create comment with userID
   .then(getUserID => {
-    Comment.create({
+    if (getUserID) {
+      Comment.create({
         comment_text: req.body.comment_text,
         post_id: req.body.post_id,
         user_id: getUserID.id
       })
-      .then(dbCommentData => res.json(dbCommentData))
-      .catch(err => {
-        console.log(err);
-        res.status(400).json(err);
-      });
+            // else create user then create comment
+    } else {
+      User.create({
+        username: req.oidc.user.name,
+        email: req.oidc.user.email
+      })
+      .then(getUserID => {
+          Comment.create({
+            comment_text: req.body.comment_text,
+            post_id: req.body.post_id,
+            user_id: getUserID.id
+          })
+      })
+    }
+  })
+  .then(dbCommentData => res.json(dbCommentData))
+  .catch(err => {
+    console.log(err);
+    res.status(400).json(err);
   });
 });
 
