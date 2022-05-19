@@ -12,7 +12,7 @@ An application that provides information for people in need of resources (e.g. f
 
 **Live Site:**
 
-Heroku link is [here](LINK TBD)
+Heroku link is [here](https://it-takes-a-city.herokuapp.com/)
 
 ---
 
