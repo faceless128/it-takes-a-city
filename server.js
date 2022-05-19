@@ -47,6 +47,8 @@ if (
   process.env.NODE_ENV !== "production"
 ) {
   config.baseURL = `http://localhost:${PORT}`;
+} else {
+  config.baseURL = '/';
 }
 
 app.use(auth(config));
