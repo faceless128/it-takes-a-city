@@ -8,7 +8,7 @@
   <% if (locals.isAuthenticated) { %>
     <div class="AboutUs margin-left: 0px;">
       <h1 class="underline py-5 text-xl">About Us</h1>
-      <p class="font-medium">Hi, this is a site where you can post resources to help the less fortunate in the community,
+      <p class="text-xl">Hi, this is a site where you can post resources to help the less fortunate in the community,
         feel free to add food banks, homeless shelters, and places to help get jobs, no one does it alone, It Takes A City!
       </p>
     </div>
@@ -88,7 +88,7 @@
                   postContainer.innerHTML+= "<p class='ml-10 text-lg font-medium'>" + userNameComment.textContent + "</p><p class='ml-10 text-sm text-neutral-500'>"+newDate+"</p>";
                   postContainer.innerHTML+= "<p class='ml-10 mb-1 text-base'>" + comments.textContent+"</p>";
                   }
-                  postContainer.innerHTML+="<input type='text' id="+data[i].id+"comment"+" name='comment-text' class=' mb-2 form-control block h-half w-full px-3py-1.5 text-basefont-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'>"+"<button onclick='addComment()''  id="+data[i].id+"  type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>"+"Add Comment"+"</button>";
+                  postContainer.innerHTML+="<input type='text' id="+data[i].id+"comment"+" name='comment-text' class=' border-black mb-2 form-control block h-half w-full px-3py-1.5 text-basefont-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'>"+"<button onclick='addComment()''  id="+data[i].id+"  type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>"+"Add Comment"+"</button>";
                 }
               });
           }
