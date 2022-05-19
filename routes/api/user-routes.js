@@ -92,7 +92,7 @@ router.get("/:id", (req, res) => {
 });
 
 // this route will POST/create a user in the DB
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
   User.create({
       username: req.body.username,
       email: req.body.email

@@ -78,25 +78,40 @@ router.get("/:id", (req, res) => {
 
 // this route will be for users to POST/create a post
 // users will be required to be logged in to use this feature
-router.post("/", requiresAuth(), (req, res) => {
-  console.log("creating");
+router.post("/", requiresAuth(), (req, res, next) => {
+  console.log(req.oidc.user);
+  console.log(req.body);
   User.findOne({
     where: {
         email: req.oidc.user.email
     }
   })
   .then(getUserID => {
-    Post.create({
-      title: req.body.title,
-      content: req.body.content,
-      user_id: getUserID.id
-    })
+    if (getUserID) {
+      Post.create({
+        title: req.body.title,
+        content: req.body.content,
+        user_id: getUserID.id
+      })
+    } else {
+      User.create({
+        username: req.oidc.user.name,
+        email: req.oidc.user.email
+      })
+      .then(getUserID => {
+        Post.create({
+          title: req.body.title,
+          content: req.body.content,
+          user_id: getUserID.id
+        })
+      })
+    }
+  })
     .then((dbPostData) => res.json(dbPostData))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
-  });
 });
 
 // this route is for users to PUT/update a post by id
@@ -104,7 +119,7 @@ router.post("/", requiresAuth(), (req, res) => {
 router.put("/:id", requiresAuth(), (req, res) => {
   Post.update({
       title: req.body.title,
-      content: req.body.post_content,
+      content: req.body.content,
     }, {
       where: {
         id: req.params.id,
