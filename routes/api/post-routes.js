@@ -17,7 +17,8 @@ router.get("/", (req, res) => {
   Post.findAll({
       attributes: ["id", "content", "title", "created_at"],
       order: [
-        ["created_at", "DESC"]
+        // ["created_at", "DESC"]
+        ["id", "ASC"]
       ],
       include: [{
           model: User,
@@ -79,13 +80,13 @@ router.get("/:id", (req, res) => {
 // this route will be for users to POST/create a post
 // users will be required to be logged in to use this feature
 router.post("/", requiresAuth(), (req, res, next) => {
-  console.log(req.oidc.user);
-  console.log(req.body);
+  // gets user email from auth0 and searches for email in DB
   User.findOne({
     where: {
         email: req.oidc.user.email
     }
   })
+  // if user exists, create post with userID
   .then(getUserID => {
     if (getUserID) {
       Post.create({
@@ -93,6 +94,7 @@ router.post("/", requiresAuth(), (req, res, next) => {
         content: req.body.content,
         user_id: getUserID.id
       })
+      // else create user then create post
     } else {
       User.create({
         username: req.oidc.user.name,
@@ -107,11 +109,11 @@ router.post("/", requiresAuth(), (req, res, next) => {
       })
     }
   })
-    .then((dbPostData) => res.json(dbPostData))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  .then((dbPostData) => res.json(dbPostData))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 // this route is for users to PUT/update a post by id

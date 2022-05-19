@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// this route will GET a Location by id
+// this route will GET a Tag by id
 router.get("/:id", (req, res) => {
     Tag.findOne({
         where: {

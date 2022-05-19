@@ -78,10 +78,13 @@ router.post("/", requiresAuth(), (req, res) => {
 // users will be required to be logged in to use this feature
 router.put("/:id", requiresAuth(), (req, res) => {
   Location.update({
-      Location_name: req.body.location_name,
-      address: req.body.address,
-      city_id: req.body.city_id,
-    }, {
+    location_name: req.body.location_name,
+    address: req.body.address,
+    state: req.body.state,
+    resource_city: req.body.resource_city,
+    zip_code: req.body.zip_code,
+    city_id: req.body.city_id
+  }, {
       where: {
         id: req.params.id,
       },
