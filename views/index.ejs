@@ -7,12 +7,13 @@
 <! -- Checks if Authenticated -->
   <% if (locals.isAuthenticated) { %>
     <div class="AboutUs margin-left: 0px;">
-      <h1 class=" py-5 text-xl">About Us</h1>
-      <p class="font-medium">These are resources shared by those in our community - we hope these help you!
+      <h1 class="underline py-5 text-xl">About Us</h1>
+      <p class="font-medium">Hi, this is a site where you can post resources to help the less fortunate in the community,
+        feel free to add food banks, homeless shelters, and places to help get jobs, no one does it alone, It Takes A City!
       </p>
     </div>
     <div class="py-5 posts">
-      <button href="/profile"class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Add Post</button>
+      <button onclick="window.location.href='/profile'" class=" w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Add Post</button>
 
     </div>
     <! -- If Not Authenticated -->
@@ -53,8 +54,8 @@
                   var commentButton = document.createElement("button");
                   comments.classList.add('comments', "ml-10", "text-base");
                   userNameComment.classList.add('userNameComments', 'ml-10', "text-lg",);
-                  userNamePost.classList.add("text-base", "text-lg", "bold", "py-2")
-                  userPost.classList.add("semibold", "text-xl", "text-base", "py-2")
+                  userNamePost.classList.add("font-semibold","text-base", "text-lg", "bold")
+                  userPost.classList.add("underline","font-bold", "text-xl", "text-base", "py-2")
                   postDate.classList.add('text-neutral-500', 'text-md')
 
                   //Setting the text of the h3 element and p element.
