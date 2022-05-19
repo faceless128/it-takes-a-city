@@ -12,6 +12,7 @@
       </p>
     </div>
     <div class="py-5 posts">
+      <button href="/profile"class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Add Post</button>
 
     </div>
     <! -- If Not Authenticated -->
@@ -59,7 +60,6 @@
                   postContainer.append(userNamePost);
                   postContainer.append(description);
                   //Appends an input field and a button for comments on each post and dynamically grabs each id indvidual to each post id
-                  postContainer.innerHTML+="<input type='text' id="+data[i].id+"comment"+" name='comment-text' class='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>"+"<button onclick='addComment()''  id="+data[i].id+"  type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>"+"Add Comment"+"</button>";
                   //Appends all comments using innerHtml
                   for(var x=0;x<data[i].comments.length;x++){
                   userNameComment.textContent = data[i].comments[x].user.username;
@@ -67,7 +67,7 @@
                   postContainer.innerHTML+= "<p class='ml-10', 'text-lg'>" + userNameComment.textContent + "</p>";
                   postContainer.innerHTML+= "<p class='ml-10', 'text-base'>" + comments.textContent+"</p>";
                   }
-
+                  postContainer.innerHTML+="<input type='text' id="+data[i].id+"comment"+" name='comment-text' class=' mb-2 form-control block h-half w-full px-3py-1.5 text-basefont-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'>"+"<button onclick='addComment()''  id="+data[i].id+"  type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>"+"Add Comment"+"</button>";
                 }
               });
           }
