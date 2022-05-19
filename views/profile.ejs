@@ -1,46 +1,32 @@
 <%- include('partials/header') -%>
 
-<p class="text-2xl font-semibold">
-  Hello
-  <a class="hover:text-blue-600" href="mailto:<%= locals.userProfile.email %>">
-    <%= locals.userProfile.name %> </a
-  >👋
-</p>
+    <p class="text-2xl font-semibold"> Hello <a class="hover:text-blue-600"
+            href='mailto:<%= locals.userProfile.email %>'>
+            <%= locals.userProfile.name %>
+        </a>👋</p>
 
-<section>
-  <h2 class="py-5 text-xl font-medium italic">Share a Resource</h2>
+    <section>
+        <h2 class="py-5 text-xl font-medium italic">Share a Resource</h2>
 
-  <form class="new-post-form">
-    <div class="py-5">
-      <label for="post-title" class="font-semibold">Title:</label>
-      <input
-        type="text"
-        id="post-title"
-        name="post-title"
-        placeholder="Title goes here"
-        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded"
-      />
-    </div>
-    <div class="py-5">
-      <label for="post-data" class="font-medium">Post:</label>
-      <textarea
-        id="post-data"
-        name="post-data"
-        rows="4"
-        placeholder="Post goes here"
-        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded"
-      ></textarea>
-    </div>
-    <button
-      type="submit"
-      class="btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-    >
-      Create Post
-    </button>
-  </form>
-</section>
+        <form class="new-post-form">
+            <div class="py-5">
+                <label for="post-title" class="font-semibold">Title:</label>
+                <input type="text" id="post-title" name="post-title" placeholder="Title goes here"
+                    class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded" />
+            </div>
+            <div class="py-5">
+                <label for="post-data" class="font-medium">Post:</label>
+                <textarea id="post-data" name="post-data" rows="4" placeholder="Post goes here"
+                    class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded"></textarea>
+            </div>
+            <button type="submit"
+                class="btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Create
+                Post</button>
+        </form>
+    </section>
 
-<script src="/javascript/add-post.js"></script>
-<script src="/javascript/comment.js"></script>
 
-<%- include('partials/footer') -%>
+    <script src="/javascript/add-post.js"></script>
+    <script src="/javascript/comment.js"></script>
+
+    <%- include('partials/footer') -%>
