@@ -52,7 +52,7 @@
                   postContainer.append(locationAddress);
                   postContainer.append(userPost);
                   postContainer.append(locationName);
-                  postContainer.innerHTML+="<input>"+"<button type='button' class='btn, btn-primary'>"+"Add Post"+"</button>";
+                  postContainer.innerHTML+="<input id="+data[i].id+">"+"<button type='button' class='btn, btn-primary'>"+"Add Post"+"</button>";
                   for(var x=0;x<data[i].comments.length;x++){
                   userNameComment.textContent = data[i].comments[x].user.username;
                   comments.textContent = data[i].comments[x].comment_text;
