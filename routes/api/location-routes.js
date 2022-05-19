@@ -60,9 +60,12 @@ router.get("/:id", (req, res) => {
 // users will be required to be logged in to use this feature
 router.post("/", requiresAuth(), (req, res) => {
   Location.create({
-      Location_name: req.body.foodbank_name,
+      location_name: req.body.location_name,
       address: req.body.address,
-      city_id: req.body.city_id,
+      state: req.body.state,
+      resource_city: req.body.resource_city,
+      zip_code: req.body.zip_code,
+      city_id: req.body.city_id
     })
     .then((dbLocationData) => res.json(dbLocationData))
     .catch((err) => {

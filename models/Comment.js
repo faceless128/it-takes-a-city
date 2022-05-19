@@ -29,9 +29,9 @@ Comment.init(
       type: DataTypes.STRING,
       // Does NOT allow a null input
       allowNull: false,
-      // Validation to ensure there's at least 4 characters
+      // Validation to ensure there's at least 1 character
       validate: {
-        len: [4],
+        len: [1],
       },
     },
     // COLUMN #3 - USER ID //

@@ -1,34 +1,35 @@
-// function for submission of a new comment
-// capture the form content
-  async function commentFormHandler(event) {
-  event.preventDefault();
+async function newFormHandler(event) {
+    // Prevents default from happening
+    event.preventDefault();
+  
+    // Sets comment to query selector with comment-text
+    const comment_text = document.querySelector('input[name="comment-text"]').value;
 
-  const comment_text = document.querySelector("").value.trim();
-
-  const post_id = window.location.toString().split("/")[
-    window.location.toString().split("/").length - 1
-  ];
-
-  // defining the method as a POST
-  if (comment_text) {
-    const response = await fetch("/api/comments", {
+    // sets post ID for the comment, currently hardcoded to 4
+    const post_id = this.id;
+  
+    // Response for POST
+    const response = await fetch(`/api/comments`, {
       method: "POST",
       body: JSON.stringify({
-        post_id,
-        comment_text
+        comment_text,
+        post_id
       }),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
-
+  
+    // If Response is OK - do the following
     if (response.ok) {
-      document.location.reload();
+      document.location.replace("/");
     } else {
       alert(response.statusText);
     }
   }
-}
-
-// this is event listener for submission of a new comment
-document.querySelector("").addEventListener("submit", commentFormHandler);
+  
+  // Event Listener for New Post Form
+  document
+    .querySelector(".add-comment-form")
+    .addEventListener("submit", newFormHandler);
+  
