@@ -35,30 +35,29 @@
               .then(function (data) {
                 for (var i = 0; i < data.length; i++) {
                   //Using console.log to examine the data
-                  
-                  var locationAddress = document.createElement("h2");
-                  var userPost = document.createElement("p");
-                  var locationName = document.createElement("h1");
+                  var userPost = document.createElement("h2");
+                  var userNamePost = document.createElement("p");
+                  var description = document.createElement("h1");
                   var userNameComment = document.createElement("p");
                   var comments = document.createElement("p");
                   var commentInput = document.createElement("input");
                   var commentButton = document.createElement("button");
                   comments.classList.add('comments', "ml-10", "text-base");
                   userNameComment.classList.add('userNameComments', 'ml-10', "text-lg",);
-                  userPost.classList.add("text-base", "text-lg", "bold", "py-2")
-                  locationAddress.classList.add("semibold", "text-xl", "text-base", "py-2")
+                  userNamePost.classList.add("text-base", "text-lg", "bold", "py-2")
+                  userPost.classList.add("semibold", "text-xl", "text-base", "py-2")
 
                   //Setting the text of the h3 element and p element.
-                  locationName.textContent = data[i].content;
-                  locationAddress.textContent = data[i].title;
-                  userPost.textContent = data[i].user.username;
+                  description.textContent = data[i].content;
+                  userPost.textContent = data[i].title;
+                  userNamePost.textContent = data[i].user.username;
 
 
                   //Appending the dynamically generated html
                   //Append will attach the element as the bottom most child.
-                  postContainer.append(locationAddress);
                   postContainer.append(userPost);
-                  postContainer.append(locationName);
+                  postContainer.append(userNamePost);
+                  postContainer.append(description);
                   //Appends an input field and a button for comments on each post and dynamically grabs each id indvidual to each post id
                   postContainer.innerHTML+="<input type='text' id="+data[i].id+"comment"+" name='comment-text' class='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>"+"<button onclick='addComment()''  id="+data[i].id+"  type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>"+"Add Comment"+"</button>";
                   //Appends all comments using innerHtml
