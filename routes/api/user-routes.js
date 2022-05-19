@@ -26,6 +26,33 @@ router.get("/", (req, res) => {
     });
 });
 
+// this route is to get the currently logged in user
+router.get("/me", requiresAuth(), (req, res) => {
+  User.findOne({
+    where: {
+        email: req.oidc.user.email
+    }
+})
+.then(getUserID => {
+    User.findOne({
+        where: {
+            id: getUserID.id
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+  });
+});
+
 // this route will GET one user by id
 router.get("/:id", (req, res) => {
   User.findOne({
@@ -64,87 +91,32 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// this route will POST/create a user
+// this route will POST/create a user in the DB
 router.post("/", (req, res) => {
   User.create({
       username: req.body.username,
-      password: req.body.password
+      email: req.body.email
     })
     .then(dbUserData => {
-      req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.loggedIn = true;
-
         res.json(dbUserData);
-      });
     })
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
     });
 });
-
-// this route is for users to login
-router.post("/login", (req, res) => {
-  User.findOne({
-      where: {
-        username: req.body.username
-      }
-    })
-    .then(dbUserData => {
-      if (!dbUserData) {
-        res.status(400).json({
-          message: "No user found with that username!"
-        });
-        return;
-      }
-
-      const validPassword = dbUserData.checkPassword(req.body.password);
-
-      if (!validPassword) {
-        res.status(400).json({
-          message: "Incorrect Password!"
-        });
-        return;
-      }
-
-      req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.loggedIn = true;
-
-        res.json({
-          user: dbUserData,
-          message: "You are now logged in!"
-        });
-      });
-    });
-});
-
-// this route is for users to logout
-router.post("/logout", (req, res) => {
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  } else {
-    res.status(404).end();
-  }
-});
-
-// this route is to update (PUT) a user by id
-router.put("/:id", (req, res) => {
+// this route is to update (PUT) a user by email
+router.put("/", requiresAuth(), (req, res) => {
   User.update(req.body, {
       individualHooks: true,
       where: {
-        id: req.params.id
+        email: req.body.email
       }
     })
     .then(dbUserData => {
       if (!dbUserData[0]) {
         res.status(404).json({
-          message: "No user found with this id!"
+          message: "No user found with this email!"
         });
         return;
       }
@@ -156,26 +128,31 @@ router.put("/:id", (req, res) => {
     });
 });
 
-// this route is to DELETE a user by id
-router.delete(":/id", (req, res) => {
-  User.destroy({
-      where: {
-        id: req.params.id
-      }
+// this route is to DELETE a user by email
+router.delete("/", requiresAuth(), (req, res) => {
+  User.findOne({
+    where: {
+        email: req.oidc.user.email
+    }
+})
+.then(getUserID => {
+    User.destroy({
+        where: {
+            id: getUserID.id
+        }
     })
     .then(dbUserData => {
-      if (!dbUserdata) {
-        res.status(404).json({
-          message: "No user found with this id!"
-        });
-        return;
-      }
-      res.json(dbUserData);
+        if (!dbUserData) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
     })
     .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+        console.log(err);
+        res.status(500).json(err);
     });
+  })
 });
 
 // EXPORT MODULE //
