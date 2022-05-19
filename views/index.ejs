@@ -29,8 +29,7 @@
           function getPosts() {
             var postContainer = document.querySelector(".posts");
             console.log(postContainer)
-            var requestUrl = "http://localhost:3000/api/posts/"
-            fetch(requestUrl)
+            fetch(`/api/posts`)
               .then(function (response) {
                 return response.json();
               })
