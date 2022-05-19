@@ -48,7 +48,7 @@ if (
 ) {
   config.baseURL = `http://localhost:${PORT}`;
 } else {
-  config.baseURL = `http://${HEROKU_APP_NAME}.herokuapp.com`
+  config.baseURL = `http://it-takes-a-city-app.herokuapp.com`
 }
 
 app.use(auth(config));
@@ -77,7 +77,6 @@ app.use(function (err, req, res, next) {
   });
 });
 
-//
 http.createServer(app).listen(PORT, () => {
   console.log(`Listening on ${config.baseURL}`);
 });
