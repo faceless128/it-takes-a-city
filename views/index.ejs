@@ -1,7 +1,62 @@
+<head>
+
+</head>
 <%- include('partials/header') -%>
 
-<% if (locals.isAuthenticated) { %>
-    <p>You are logged in. <a href="/profile" class="underline">View your profile</a>.</p>
-<% }  %>
+  <% if (locals.isAuthenticated) { %>
+    <div class="AboutUs margin-left: 0px;">
+      <h1 class="italic">About Us</h1>
+      <p class="pt-1">These are food bank locations you can add them and their addresses, any post help people in need,
+        Thanks!</p>
+    </div>
+    <div class="posts space-y-11">
 
-<%- include('partials/footer') -%>
+    </div>
+    <% } %>
+
+      <%- include('partials/footer') -%>
+        <script>
+          function getPosts() {
+            var postContainer = document.querySelector(".posts");
+            console.log(postContainer)
+            var requestUrl = "http://localhost:3000/api/posts/"
+            fetch(requestUrl)
+              .then(function (response) {
+                return response.json();
+              })
+              .then(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                  //Using console.log to examine the data
+                  var x = 0
+                  var locationAddress = document.createElement("h2");
+                  var userPost = document.createElement("p");
+                  var locationName = document.createElement("h1");
+                  var userNameComment = document.createElement("p")
+                  var comments = document.createElement("p")
+                  comments.classList.add('comments', "ml-10", "text-base");
+                  userNameComment.classList.add('userNameComments', 'ml-10', "text-lg",);
+                  userPost.classList.add("text-base", "bold")
+                  locationAddress.classList.add("italic text-base")
+
+                  //Setting the text of the h3 element and p element.
+                  locationName.textContent = data[i].content;
+                  locationAddress.textContent = data[i].title;
+                  userPost.textContent = data[i].user.username;
+
+
+                  //Appending the dynamically generated html to the div associated with the id="users"
+                  //Append will attach the element as the bottom most child.
+                  postContainer.append(locationAddress);
+                  postContainer.append(userPost);
+                  postContainer.append(locationName);
+                  userNameComment.textContent = data[i].comments[x].user.username;
+                  comments.textContent = data[i].comments[x].comment_text;
+                  postContainer.append(userNameComment)
+                  postContainer.append(comments)
+
+                }
+              });
+          }
+          getPosts();
+
+        </script>
