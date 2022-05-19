@@ -5,11 +5,11 @@
 
   <% if (locals.isAuthenticated) { %>
     <div class="AboutUs margin-left: 0px;">
-      <h1 class="italic">About Us</h1>
-      <p class="pt-1">These are food bank locations you can add them and their addresses, any post help people in need,
-        Thanks!</p>
+      <h1 class=" py-5 text-xl">About Us</h1>
+      <p class="font-medium">These are resources shared by those in our community - we hope these help you!
+      </p>
     </div>
-    <div class="posts space-y-11">
+    <div class=" py-5 posts">
 
     </div>
     <% } %>
@@ -31,8 +31,8 @@
                   var locationAddress = document.createElement("h2");
                   var userPost = document.createElement("p");
                   var locationName = document.createElement("h1");
-                  userPost.classList.add("text-base", "bold")
-                  locationAddress.classList.add("italic", "text-base")
+                  userPost.classList.add("text-base", "text-lg", "bold", "py-5")
+                  locationAddress.classList.add("semibold", "text-xl", "text-base", "py-5")
 
                   //Setting the text of the h3 element and p element.
                   locationName.textContent = data[i].content;
@@ -44,7 +44,7 @@
                   //Append will attach the element as the bottom most child.
                   postContainer.append(locationAddress);
                   postContainer.append(locationName);
-                for (x = 0; x < data[i].comments.length; x++) {
+                  for (x = 0; x < data[i].comments.length; x++) {
                     // for loop to add comments after each post
                     var userNameComment = document.createElement("p");
                     var comments = document.createElement("p");
@@ -54,7 +54,7 @@
                     comments.textContent = data[i].comments[x].comment_text;
                     postContainer.append(userNameComment);
                     postContainer.append(comments);
-                }
+                  }
                 }
               });
           }
