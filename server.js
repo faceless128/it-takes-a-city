@@ -47,8 +47,6 @@ if (
   process.env.NODE_ENV !== "production"
 ) {
   config.baseURL = `http://localhost:${PORT}`;
-} else {
-  config.baseURL = '/';
 }
 
 app.use(auth(config));
@@ -78,5 +76,5 @@ app.use(function (err, req, res, next) {
 });
 
 http.createServer(app).listen(PORT, () => {
-  console.log(`Listening on ${config.baseURL}`);
+  // console.log(`Listening on ${config.baseURL}`);
 });
