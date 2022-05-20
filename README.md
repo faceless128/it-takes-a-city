@@ -12,7 +12,7 @@ An application that provides information for people in need of resources (e.g. f
 
 **Live Site:**
 
-Heroku link is [here](LINK TBD)
+Heroku link is [here](https://it-takes-a-city.herokuapp.com/)
 
 ---
 
@@ -25,6 +25,7 @@ Heroku link is [here](LINK TBD)
 - dotenv
 - Tailwind
 - Auth0
+- EJS
 
 ---
 
@@ -33,8 +34,8 @@ Heroku link is [here](LINK TBD)
 No installation necessary - head to the Heroku link to interact with the deployed site.
 
 **Development installation:**
- Clone from the repository on GitHub. Then in the command line of node.js, use the command "npm install" to get the proper modules installed. Then run mysql and run the schema file. Finally, you can seed the database with npm run seeds.
+Clone from the repository on GitHub. Then in the command line of node.js, use the command "npm install" to get the proper modules installed. Then run mysql and run the schema file. Finally, you can seed the database with npm run seeds.
 
-**Screenshot**
+**Screenshot:**
 
 ![Screenshot of our site, it's a form site to post resources for people that are less fortunate](./public/assets/ItTakesACity.PNG)
