@@ -19,4 +19,12 @@ router.get('/profile', requiresAuth(), function (req, res, next) {
   });
 });
 
+router.get('/locations', function (req, res, next) {
+  res.render('locations', {
+    title: 'Resources page',
+    isAuthenticated: req.oidc.isAuthenticated(),
+    userProfile: req.oidc.user
+  });
+});
+
 module.exports = router;

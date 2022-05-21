@@ -1,0 +1,81 @@
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <! -- Adds Header -->
+  <%- include('partials/header') -%>
+  <! -- Checks if Authenticated -->
+    <% if (locals.isAuthenticated) { %>
+      <div class="AboutUs margin-left: 0px;">
+        <h1 class="underline py-5 text-xl">About Us</h1>
+        <p class="text-xl">Hi, this is a site where you can post resources to help the less fortunate in the community,
+          feel free to add food banks, homeless shelters, and places to help get jobs, no one does it alone, It Takes A City!
+        </p>
+      </div>
+      <div class="py-5 locations">
+        <button onclick="window.location.href='/profile'" class=" w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Add Post</button>
+  
+      </div>
+      <! -- If Not Authenticated -->
+      <% } else { %>
+        <p class="py-5 text-xl font-medium">You are not currently logged in and will be unable to see posts. Please <a
+            class="hover:text-blue-600" href="/login">login </a> to continue!</p>
+            <div class="py-5 locations">
+            </div>
+        
+        <% } %>
+  
+          <%- include('partials/footer') -%>
+          <script>
+            // Functions used in the main page
+            function getPosts() {
+              var postContainer = document.querySelector(".locations");
+              console.log(postContainer)
+              fetch(`/api/locations`)
+                .then(function (response) {
+                  return response.json();
+                })
+                .then(function (data) {
+                  for (var i = 0; i < data.length; i++) {
+                    var dateParts = data[i].updatedAt.split("-");
+                    var jsDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+                    var month = jsDate.getUTCMonth()+1;
+                    var day = dateParts[2].substr(0,2);
+                    var year = jsDate.getFullYear();
+  
+                    var newDate = year +"/"+ month +"/"+ day;
+                    //Using console.log to examine the data
+                    var updateDate = document.createElement("p")
+                    var locationName = document.createElement("h2");
+                    var streetAddress = document.createElement("p");
+                    var cityStateZip = document.createElement("h1");
+                    var userNameComment = document.createElement("p");
+                    var comments = document.createElement("p");
+                    var commentInput = document.createElement("input");
+                    var commentButton = document.createElement("button");
+                    comments.classList.add('comments', "ml-10", "text-base");
+                    userNameComment.classList.add('userNameComments', 'ml-10', "text-lg",);
+                    streetAddress.classList.add("font-semibold","text-base", "text-lg", "bold")
+                    locationName.classList.add("underline","font-bold", "text-xl", "text-base", "py-2")
+                    updateDate.classList.add('text-neutral-500', 'text-md')
+  
+                    //Setting the text of the h3 element and p element.
+                    cityStateZip.textContent = `${data[i].resource_city}, ${data[i].state} ${data[i].zip_code}`;
+                    locationName.textContent = data[i].location_name;
+                    streetAddress.textContent = data[i].address;
+                    updateDate.textContent = `Accurate as of ${newDate}`;
+  
+  
+                    //Appending the dynamically generated html
+                    //Append will attach the element as the bottom most child.
+                    postContainer.append(locationName);
+                    postContainer.append(streetAddress);
+                    postContainer.append(cityStateZip);
+                    postContainer.append(updateDate);
+                  }
+                });
+            }
+            getPosts();
+ 
+          </script>
+  
