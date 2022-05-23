@@ -22,8 +22,6 @@ function getPosts() {
                 var description = document.createElement("h1");
                 var userNameComment = document.createElement("p");
                 var comments = document.createElement("p");
-                var commentInput = document.createElement("input");
-                var commentButton = document.createElement("button");
                 comments.classList.add('comments', "ml-10", "text-base");
                 userNameComment.classList.add('userNameComments', 'ml-10', "text-lg",);
                 userNamePost.classList.add("font-semibold", "text-base", "text-lg", "bold")
@@ -60,40 +58,8 @@ function getPosts() {
                     postContainer.innerHTML += "<p class='ml-10 text-lg font-medium'>" + userNameComment.textContent + "</p><p class='ml-10 text-sm text-neutral-500'>" + newDate + "</p>";
                     postContainer.innerHTML += "<p class='ml-10 mb-1 text-base'>" + comments.textContent + "</p>";
                 }
-                postContainer.innerHTML += "<input type='text' id=" + data[i].id + "comment" + " name='comment-text' class=' border-black mb-2 form-control block h-half w-full px-3py-1.5 text-basefont-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'>" + "<button onclick='addComment()''  id=" + data[i].id + "  type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>" + "Add Comment" + "</button>";
             }
         });
 }
 getPosts();
-
-
-function addComment() {
-    // Sets comment to query selector with comment-text
-    const comment_text = document.getElementById(event.srcElement.id + "comment").value;
-
-
-    // sets post ID for the comment, currently hardcoded to 4
-    const post_id = event.srcElement.id;
-
-    // Response for POST
-    const response = fetch(`/api/comments`, {
-        method: "POST",
-        body: JSON.stringify({
-            comment_text,
-            post_id
-        }),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-
-    // If Response is OK - do the following
-    if (response.ok) {
-        document.location.replace("/");
-    } else {
-        //returns error for no reason still working on it, even though it works
-        //!!!!!!!!!!!!!!!!!!
-        document.location.replace("/");
-    }
-}
 
