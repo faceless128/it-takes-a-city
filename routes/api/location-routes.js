@@ -16,7 +16,18 @@ const { requiresAuth } = require('express-openid-connect');
 
 // this route will GET all Locations
 router.get("/", (req, res) => {
-  Location.findAll()
+  Location.findAll({
+    include: [
+      {
+        model: City,
+        attributes: ["name", "stateName"],
+      },
+      {
+        model: Tag,
+        attributes: ["tag_name"],
+      }
+    ]
+  })
     .then((dbLocationData) => res.json(dbLocationData))
     .catch((err) => {
       console.log(err);
