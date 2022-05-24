@@ -13,8 +13,29 @@
         </p>
       </div>
       <div class="py-5 locations">
-        <button onclick="window.location.href='/profile'" class=" w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Add Post</button>
-  
+      </div>
+      <div class="py-5">
+        <form class="new-location-form">
+          <label for="location-name" class="font-semibold">Location:</label>
+          <input type="text" id="location-name" name="location-name" placeholder="Location name goes here"
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded" /><br>
+          <label for="address-data" class="font-semibold">Address:</label>
+          <input type="text" id="address-data" name="address-data" placeholder="Street address goes here"
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded" /><br>
+          <label for="city-data" class="font-semibold">City:</label>
+          <input type="text" id="city-data" name="city-data" placeholder="City name goes here"
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded" /><br>
+          <label for="state-data" class="font-semibold">State:</label>
+          <input type="text" id="state-data" name="state-data" placeholder="State name goes here"
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded" /><br>
+          <label for="zip-code" class="font-semibold">Zip:</label>
+          <input type="text" id="zip-code" name="zip-code" placeholder="Zip code goes here"
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded" />
+          </div>
+          <button type="submit"
+              class="btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Create
+              Post</button>
+      </form>
       </div>
       <! -- If Not Authenticated -->
       <% } else { %>
