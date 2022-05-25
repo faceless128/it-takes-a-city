@@ -37,7 +37,33 @@ router.get("/me", requiresAuth(), (req, res) => {
     User.findOne({
         where: {
             id: getUserID.id
-        }
+        },
+        include: [{
+            model: Post,
+            attributes: ["id", "title", "content", "created_at"],
+            include: [{
+                model: User,
+                attributes: ["username"],
+              },
+              {
+                model: Comment,
+                attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+                include: {
+                  model: User,
+                  attributes: ["username"],
+                },
+              },
+            ]
+          },
+          {
+            model: Comment,
+            attributes: ["id", "comment_text", "created_at"],
+            include: {
+              model: Post,
+              attributes: ["title"]
+            }
+          }
+        ]
     })
     .then(dbUserData => {
         if (!dbUserData) {
