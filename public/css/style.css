@@ -10,9 +10,14 @@ h2{
 .comments{
     margin-left: 2.5%;
 }
-/* userNameComments class - margin left */
 
+/* userNameComments class - margin left */
 .userNameComments{
     margin-left: 2.5%;
     font-weight: bold;
+}
+
+/* hides placeholder from dropdown */
+select > .placeholder {
+    display: none;
 }

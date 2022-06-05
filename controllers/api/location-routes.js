@@ -1,20 +1,33 @@
 // REQUIREMENTS //
-const router = require("express");
+const router = require("express").Router();
 const {
   User,
   Post,
   Comment,
   City,
-  Location
+  Location,
+  Tag,
+  LocationTag
 } = require("../../models");
 const sequelize = require("../../config/connection");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
 // this route will GET all Locations
 router.get("/", (req, res) => {
-  Location.findAll()
+  Location.findAll({
+    include: [
+      {
+        model: City,
+        attributes: ["name", "stateName"],
+      },
+      {
+        model: Tag,
+        attributes: ["tag_name"],
+      }
+    ]
+  })
     .then((dbLocationData) => res.json(dbLocationData))
     .catch((err) => {
       console.log(err);
@@ -28,11 +41,16 @@ router.get("/:id", (req, res) => {
       where: {
         id: req.params.id,
       },
-      attributes: ["id", "location_name", "address"],
-      include: [{
-        model: City,
-        attributes: ["name", "stateName"],
-      }, ],
+      include: [
+        {
+          model: City,
+          attributes: ["name", "stateName"],
+        },
+        {
+          model: Tag,
+          attributes: ["tag_name"],
+        }
+      ]
     })
     .then((dbLocationData) => {
       if (!dbLocationData) {
@@ -51,11 +69,14 @@ router.get("/:id", (req, res) => {
 
 // this route will POST/ add a Location
 // users will be required to be logged in to use this feature
-router.post("/", withAuth, (req, res) => {
+router.post("/", requiresAuth(), (req, res) => {
   Location.create({
-      Location_name: req.body.foodbank_name,
+      location_name: req.body.location_name,
       address: req.body.address,
-      city_id: req.body.city_id,
+      state: req.body.state,
+      resource_city: req.body.resource_city,
+      zip_code: req.body.zip_code,
+      city_id: req.body.city_id
     })
     .then((dbLocationData) => res.json(dbLocationData))
     .catch((err) => {
@@ -66,7 +87,7 @@ router.post("/", withAuth, (req, res) => {
 
 // this route will PUT/update a Location by id
 // users will be required to be logged in to use this feature
-router.put("/:id", withAuth, (req, res) => {
+router.put("/:id", requiresAuth(), (req, res) => {
   Location.update({
       Location_name: req.body.location_name,
       address: req.body.address,
@@ -93,7 +114,7 @@ router.put("/:id", withAuth, (req, res) => {
 
 // this route is to DELETE a Location by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", withAuth, (req, res) => {
+router.delete("/:id", requiresAuth(), (req, res) => {
   Location.destroy({
       where: {
         id: req.params.id,

@@ -8,7 +8,7 @@ const {
   Location
 } = require("../../models");
 const sequelize = require("../../config/connection");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
@@ -78,13 +78,35 @@ router.get("/:id", (req, res) => {
 
 // this route will be for users to POST/create a post
 // users will be required to be logged in to use this feature
-router.post("/", withAuth, (req, res) => {
-  console.log("creating");
-  Post.create({
-      title: req.body.title,
-      content: req.body.post_content,
-      user_id: req.session.user_id
-    })
+router.post("/", requiresAuth(), (req, res, next) => {
+  console.log(req.oidc.user);
+  console.log(req.body);
+  User.findOne({
+    where: {
+        email: req.oidc.user.email
+    }
+  })
+  .then(getUserID => {
+    if (getUserID) {
+      Post.create({
+        title: req.body.title,
+        content: req.body.content,
+        user_id: getUserID.id
+      })
+    } else {
+      User.create({
+        username: req.oidc.user.name,
+        email: req.oidc.user.email
+      })
+      .then(getUserID => {
+        Post.create({
+          title: req.body.title,
+          content: req.body.content,
+          user_id: getUserID.id
+        })
+      })
+    }
+  })
     .then((dbPostData) => res.json(dbPostData))
     .catch((err) => {
       console.log(err);
@@ -94,10 +116,10 @@ router.post("/", withAuth, (req, res) => {
 
 // this route is for users to PUT/update a post by id
 // users will be required to be logged in to use this feature
-router.put("/:id", withAuth, (req, res) => {
+router.put("/:id", requiresAuth(), (req, res) => {
   Post.update({
       title: req.body.title,
-      content: req.body.post_content,
+      content: req.body.content,
     }, {
       where: {
         id: req.params.id,
@@ -120,7 +142,7 @@ router.put("/:id", withAuth, (req, res) => {
 
 // this route is to DELETE/destroy a post by id
 // users will be required to be logged in to use this feature
-router.delete("/:id", withAuth, (req, res) => {
+router.delete("/:id", requiresAuth(), (req, res) => {
   Post.destroy({
       where: {
         id: req.params.id,

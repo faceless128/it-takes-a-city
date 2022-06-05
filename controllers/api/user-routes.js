@@ -8,7 +8,7 @@ const {
   Location,
 } = require("../../models");
 const sequelize = require("../../config/connection");
-const withAuth = require("../../utils/auth");
+const { requiresAuth } = require('express-openid-connect');
 
 // ROUTES //
 
@@ -16,7 +16,7 @@ const withAuth = require("../../utils/auth");
 router.get("/", (req, res) => {
   User.findAll({
       attributes: {
-        exclude: ["password"]
+        exclude: ["email"]
       }
     })
     .then(dbUserData => res.json(dbUserData))
@@ -26,11 +26,64 @@ router.get("/", (req, res) => {
     });
 });
 
+// this route is to get the currently logged in user
+router.get("/me", requiresAuth(), (req, res) => {
+  User.findOne({
+    where: {
+        email: req.oidc.user.email
+    }
+})
+.then(getUserID => {
+    User.findOne({
+        where: {
+            id: getUserID.id
+        },
+        include: [{
+            model: Post,
+            attributes: ["id", "title", "content", "created_at"],
+            include: [{
+                model: User,
+                attributes: ["username"],
+              },
+              {
+                model: Comment,
+                attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+                include: {
+                  model: User,
+                  attributes: ["username"],
+                },
+              },
+            ]
+          },
+          {
+            model: Comment,
+            attributes: ["id", "comment_text", "created_at"],
+            include: {
+              model: Post,
+              attributes: ["title"]
+            }
+          }
+        ]
+    })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+  });
+});
+
 // this route will GET one user by id
 router.get("/:id", (req, res) => {
   User.findOne({
       attributes: {
-        exclude: ["password"]
+        exclude: ["email"]
       },
       where: {
         id: req.params.id
@@ -64,87 +117,32 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// this route will POST/create a user
-router.post("/", (req, res) => {
+// this route will POST/create a user in the DB
+router.post("/", (req, res, next) => {
   User.create({
       username: req.body.username,
-      password: req.body.password
+      email: req.body.email
     })
     .then(dbUserData => {
-      req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.loggedIn = true;
-
         res.json(dbUserData);
-      });
     })
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
     });
 });
-
-// this route is for users to login
-router.post("/login", (req, res) => {
-  User.findOne({
-      where: {
-        username: req.body.username
-      }
-    })
-    .then(dbUserData => {
-      if (!dbUserData) {
-        res.status(400).json({
-          message: "No user found with that username!"
-        });
-        return;
-      }
-
-      const validPassword = dbUserData.checkPassword(req.body.password);
-
-      if (!validPassword) {
-        res.status(400).json({
-          message: "Incorrect Password!"
-        });
-        return;
-      }
-
-      req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.loggedIn = true;
-
-        res.json({
-          user: dbUserData,
-          message: "You are now logged in!"
-        });
-      });
-    });
-});
-
-// this route is for users to logout
-router.post("/logout", (req, res) => {
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  } else {
-    res.status(404).end();
-  }
-});
-
-// this route is to update (PUT) a user by id
-router.put("/:id", (req, res) => {
+// this route is to update (PUT) a user by email
+router.put("/", requiresAuth(), (req, res) => {
   User.update(req.body, {
       individualHooks: true,
       where: {
-        id: req.params.id
+        email: req.body.email
       }
     })
     .then(dbUserData => {
       if (!dbUserData[0]) {
         res.status(404).json({
-          message: "No user found with this id!"
+          message: "No user found with this email!"
         });
         return;
       }
@@ -156,26 +154,31 @@ router.put("/:id", (req, res) => {
     });
 });
 
-// this route is to DELETE a user by id
-router.delete(":/id", (req, res) => {
-  User.destroy({
-      where: {
-        id: req.params.id
-      }
+// this route is to DELETE a user by email
+router.delete("/", requiresAuth(), (req, res) => {
+  User.findOne({
+    where: {
+        email: req.oidc.user.email
+    }
+})
+.then(getUserID => {
+    User.destroy({
+        where: {
+            id: getUserID.id
+        }
     })
     .then(dbUserData => {
-      if (!dbUserdata) {
-        res.status(404).json({
-          message: "No user found with this id!"
-        });
-        return;
-      }
-      res.json(dbUserData);
+        if (!dbUserData) {
+            res.status(404).json({ message: 'No user found with this id' });
+            return;
+        }
+        res.json(dbUserData);
     })
     .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+        console.log(err);
+        res.status(500).json(err);
     });
+  })
 });
 
 // EXPORT MODULE //
