@@ -15,7 +15,7 @@ const http = require("http");
 
 const logger = require("morgan");
 
-const router = require("./routes/index");
+const router = require("./controllers/index");
 
 const { auth } = require("express-openid-connect");
 
